@@ -42,13 +42,16 @@
 
 -(void)moveToPosition:(CGPoint)point {
     self.label = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.amount] fontName:@"Marker Felt" fontSize:24.0];
-//    self.label.position = self.position;
-    [self addChild:self.label];
+    self.label.position = self.position;
+
+    [self.parent addChild:self.label];
+    [self.label runAction:[CCMoveTo actionWithDuration:2.0 position:point]];
     [self runAction:[CCMoveTo actionWithDuration:2.0 position:point]];
     [self schedule:@selector(moveFinished:) interval:2.0];
 }
 
 -(void)moveFinished:(ccTime)dt {
+    [self.label removeFromParentAndCleanup:YES];
     [self removeFromParentAndCleanup:YES];
     [self.delegate transportFinished:self];
 }
