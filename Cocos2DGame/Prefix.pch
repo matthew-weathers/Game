@@ -1,0 +1,38 @@
+//
+// Prefix header for all source files of the 'Test' target in the 'Test' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "cocos2d.h"
+
+typedef enum  {
+    small, 
+    medium,
+    large
+} BaseSize;
+
+typedef enum {
+    neutralTeam,
+    redTeam,
+    blueTeam
+} Team;
+
+#define FILENAME_FOR_TEAM_SIZE(team, baseSize) team == redTeam && baseSize == small ? @"SmallRedBase.png" :\
+team == redTeam && baseSize == medium ? @"MediumRedBase.png" :\
+team == redTeam && baseSize == large ? @"LargeRedBase.png" :\
+team == blueTeam && baseSize == small ? @"SmallBlueBase.png" :\
+team == blueTeam && baseSize == medium ?@"MediumBlueBase.png" :\
+team == blueTeam && baseSize == large ? @"LargeBlueBase.png" :\
+team == neutralTeam && baseSize == small ? @"SmallGrayBase.png" :\
+team == neutralTeam && baseSize == medium ?  @"MediumGrayBase.png" :\
+team == neutralTeam && baseSize == large ?  @"LargeGrayBase.png" : @"";\
+
+#endif
