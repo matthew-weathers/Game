@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7F4D599D15404F9A0017002C"
-               BuildableName = "Cocos2DGame.app"
+               BuildableName = "Game.app"
                BlueprintName = "Game"
                ReferencedContainer = "container:Game.xcodeproj">
             </BuildableReference>
@@ -32,7 +32,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7F4D599D15404F9A0017002C"
-            BuildableName = "Cocos2DGame.app"
+            BuildableName = "Game.app"
             BlueprintName = "Game"
             ReferencedContainer = "container:Game.xcodeproj">
          </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7F4D599D15404F9A0017002C"
-            BuildableName = "Cocos2DGame.app"
+            BuildableName = "Game.app"
             BlueprintName = "Game"
             ReferencedContainer = "container:Game.xcodeproj">
          </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7F4D599D15404F9A0017002C"
-            BuildableName = "Cocos2DGame.app"
+            BuildableName = "Game.app"
             BlueprintName = "Game"
             ReferencedContainer = "container:Game.xcodeproj">
          </BuildableReference>
