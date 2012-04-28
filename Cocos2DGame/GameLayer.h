@@ -16,8 +16,6 @@
 
 @property (nonatomic, retain) Player *player;
 @property (nonatomic, retain) NSArray *bases;
-@property (nonatomic, assign) CGPoint initialPoint;
-@property (nonatomic, assign) CGPoint currentPoint;
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;

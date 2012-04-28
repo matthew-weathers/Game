@@ -129,6 +129,7 @@
 		7F4D5B3D1540ADA10017002C /* SmallGrayBase.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4D5B371540ADA10017002C /* SmallGrayBase.png */; };
 		7F4D5B3E1540ADA10017002C /* SmallRedBase.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4D5B381540ADA10017002C /* SmallRedBase.png */; };
 		7F4D5B411540AF7D0017002C /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4D5B401540AF7D0017002C /* Player.m */; };
+		C9FE0D24154C77A900766883 /* RectangleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE0D23154C77A900766883 /* RectangleLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -377,6 +378,8 @@
 		7F4D5B381540ADA10017002C /* SmallRedBase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SmallRedBase.png; path = Resources/SmallRedBase.png; sourceTree = "<group>"; };
 		7F4D5B3F1540AF7C0017002C /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		7F4D5B401540AF7D0017002C /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		C9FE0D22154C77A900766883 /* RectangleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectangleLayer.h; sourceTree = "<group>"; };
+		C9FE0D23154C77A900766883 /* RectangleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectangleLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -449,6 +452,8 @@
 				7F4D59B315404F9A0017002C /* Resources */,
 				7F4D59C715404F9A0017002C /* libs */,
 				7F4D5B0015404F9C0017002C /* Supporting Files */,
+				C9FE0D22154C77A900766883 /* RectangleLayer.h */,
+				C9FE0D23154C77A900766883 /* RectangleLayer.m */,
 			);
 			name = Game;
 			path = Cocos2DGame;
@@ -960,6 +965,7 @@
 				7F4D5B2B15409FD80017002C /* Base.m in Sources */,
 				7F4D5B2E1540A3750017002C /* GameLayer.m in Sources */,
 				7F4D5B411540AF7D0017002C /* Player.m in Sources */,
+				C9FE0D24154C77A900766883 /* RectangleLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
