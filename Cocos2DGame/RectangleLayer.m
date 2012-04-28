@@ -62,6 +62,9 @@
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
     
+    glColor4f(0.0f, 0.65f, 0.35f, 0.3f);
+    glLineWidth(1.0f);
+    
 	glVertexPointer(2, GL_FLOAT, 0, poli);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     
