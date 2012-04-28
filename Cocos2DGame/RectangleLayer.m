@@ -7,14 +7,30 @@
 //
 
 #import "RectangleLayer.h"
-
+#import "GameLayer.h"
 
 @implementation RectangleLayer
 
 @synthesize initialPoint = _initialPoint;
 @synthesize currentPoint = _currentPoint;
+@synthesize delegate = _delegate;
 
 +(CCScene *) scene
+{
+	// 'scene' is an autorelease object.
+	CCScene *scene = [CCScene node];
+	
+	// 'layer' is an autorelease object.
+	RectangleLayer *layer = [RectangleLayer node];
+	
+	// add layer as a child to scene
+	[scene addChild: layer];
+	
+	// return the scene
+	return scene;
+}
+
+-(CCScene *) scene
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
@@ -93,6 +109,9 @@
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    
+    [self.delegate highlightEndedWithInitialPoint:self.initialPoint finalPoint:self.currentPoint];
     self.initialPoint = ccp(0.0f, 0.0f);
     self.currentPoint = self.initialPoint;
 }

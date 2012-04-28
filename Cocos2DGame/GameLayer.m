@@ -17,26 +17,72 @@
 
 @synthesize bases = _bases;
 @synthesize player = _player;
-
+@synthesize rectLayer = _rectLayer;
 
 +(CCScene *) scene
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
-	// 'layer' is an autorelease object.
-	GameLayer *layer = [GameLayer node];
-	
-	// add layer as a child to scene
-	[scene addChild: layer];
-	
+    RectangleLayer *rectLayer = [RectangleLayer node];
+    [scene addChild:rectLayer z:1];
+    
+    // 'layer' is an autorelease object.
+    GameLayer *layer = [[[GameLayer alloc] initWithRectangleLayer:rectLayer] autorelease];
+    [scene addChild:layer];
+    
 	// return the scene
 	return scene;
 }
 
+-(id)initWithRectangleLayer:(RectangleLayer *)rectLayer {
+    self.player = [Player new];
+    self.player.team = blueTeam;
+    self.rectLayer = rectLayer;
+    self.rectLayer.delegate = self;
+    
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
+	if( (self=[super init])) {
+        [self registerWithTouchDispatcher];
+        
+        Base *base0 = [Base spriteWithFile: @"SmallGrayBase.png"];
+        base0.baseSize = small;
+        base0.tag = 0;
+        base0.regenSpeed = 1.0f;
+        base0.team = neutralTeam;
+        base0.position = ccp( 50, 80 );
+        base0.delegate = self;
+        [self addChild:base0];
+        
+        Base *base1 = [Base spriteWithFile: @"MediumRedBase.png"];
+        base1.baseSize = medium;
+        base1.regenSpeed = 0.90f;
+        base1.team = redTeam;
+        base1.tag = 1;
+        base1.position = ccp( 50, 200 );
+        base1.delegate = self;
+        [self addChild:base1];
+        
+        Base *base2 = [Base spriteWithFile:@"LargeBlueBase.png"];
+        base2.baseSize = large;
+        base2.regenSpeed = 0.80f;
+        base2.team = blueTeam;
+        base2.tag = 2;
+        base2.position = ccp( 150, 100);
+        base2.delegate = self;
+        [self addChild:base2];
+        
+        self.bases = [NSArray arrayWithObjects:base0, base1, base2, nil];
+        
+        [self.bases makeObjectsPerformSelector:@selector(start)];
+    }
+    return self;
+}
+
 // on "init" you need to initialize your instance
--(id) init
-{
+-(id) init {
+        
     self.player = [Player new];
     self.player.team = blueTeam;
     
@@ -76,8 +122,9 @@
         
         [self.bases makeObjectsPerformSelector:@selector(start)];
     
-        [self addChild:[RectangleLayer scene]];
-        
+        RectangleLayer *rl = [RectangleLayer new];
+        rl.delegate = self;
+        [self addChild:[rl scene]];
 	}
 	return self;
 }
@@ -194,6 +241,35 @@
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+}
+
+- (void)highlightEndedWithInitialPoint:(CGPoint)initPoint finalPoint:(CGPoint)finalPoint {
+    CGFloat x, y, width, height;
+    if (initPoint.x > finalPoint.x) {
+        x = finalPoint.x;
+        width = initPoint.x - finalPoint.x;
+    } else {
+        x = initPoint.x;
+        width = finalPoint.x - initPoint.x;
+    }
+    
+    if (initPoint.y > finalPoint.y) {
+        y = finalPoint.y;
+        height = initPoint.y - finalPoint.y;
+    } else {
+        y = initPoint.y;
+        height = finalPoint.y - initPoint.y;
+    }
+    
+    CGRect rect = CGRectMake(x, y, width, height);
+    
+    for (Base *b in self.bases) {
+        if (CGRectIntersectsRect(rect, [b boundingBox])) {
+            [b setSelection:YES];
+        } else {
+            [b setSelection:NO];
+        }
+    }
 }
 
 @end
