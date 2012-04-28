@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Cocos2DGame/GameLayer.m"
-         timestampString = "357346663.458611"
+         timestampString = "357347826.066412"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "167"
-         endingLineNumber = "167"
+         startingLineNumber = "206"
+         endingLineNumber = "206"
          landmarkName = "-transportFinished:"
          landmarkType = "5">
       </FileBreakpoint>

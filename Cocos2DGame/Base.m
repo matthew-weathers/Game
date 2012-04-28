@@ -17,7 +17,6 @@
 @synthesize capacity = _capacity;
 @synthesize label =_label;
 @synthesize team = _team;
-@synthesize toTag = _toTag;
 @synthesize regenSpeed = _regenSpeed;
 @synthesize baseSize = _baseSize;
 

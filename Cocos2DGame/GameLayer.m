@@ -77,8 +77,47 @@
         self.bases = [NSArray arrayWithObjects:base0, base1, base2, nil];
         
         [self.bases makeObjectsPerformSelector:@selector(start)];
+        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(makeDecision:) userInfo:nil repeats:YES];
     }
     return self;
+}
+
+-(void)makeDecision:(id)sender {
+    for (Base *b in self.bases) {
+        if (b.team == redTeam) {
+            for (Base *b2 in self.bases) {
+                if ((b.tag != b2.tag) && (b.team != b2.team)) {
+                    if (b.count/2 > b2.count + 2) {
+                        int amount = b.count/2;
+                        b.count -= amount;
+                        [b updateLabel:0];
+                        
+                        Transport *t;
+                        t = [Transport spriteWithFile:@"RedArrow.png"];   
+                        t.team = redTeam;
+                        t.toTag = b2.tag;
+                        t.amount = amount;
+                        t.position = b.position;
+                        t.delegate = self;
+                        
+                        // Calculation
+                        CGPoint difference = ccpSub(b.position, b2.position);
+                        CGFloat rotationRadians = ccpToAngle(difference);
+                        CGFloat rotationDegrees = -CC_RADIANS_TO_DEGREES(rotationRadians);
+                        rotationDegrees += 180.0f;
+                        CGFloat rotateByDegrees = rotationDegrees - b.rotation;
+                        
+                        CCRotateBy * turnBy = [CCRotateBy actionWithDuration:0.0f angle:rotateByDegrees];
+                        [t runAction:turnBy];
+                        
+                        [self addChild:t];
+                        
+                        [t moveToPosition:b2.position];
+                    }
+                }
+            }
+        }
+    }
 }
 
 // on "dealloc" you need to release all your retained objects
