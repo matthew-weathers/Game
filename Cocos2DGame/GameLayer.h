@@ -12,8 +12,6 @@
 #import "RectangleLayer.h"
 
 @interface GameLayer : CCLayer <BaseDelegate, TransportDelegate, RectangleLayerDelegate>
-{
-}
 
 @property (nonatomic, retain) Player *player;
 @property (nonatomic, retain) NSArray *bases;

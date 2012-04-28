@@ -14,11 +14,12 @@
 @synthesize defaultColor = _defaultColor;
 @synthesize delegate = _delegate;
 @synthesize count = _count;
+@synthesize capacity = _capacity;
 @synthesize label =_label;
 @synthesize team = _team;
 @synthesize toTag = _toTag;
 @synthesize regenSpeed = _regenSpeed;
-@synthesize baseSize;
+@synthesize baseSize = _baseSize;
 
 - (BOOL)containsTouchLocation:(UITouch *)touch
 {
@@ -91,16 +92,16 @@
 }
 
 - (void)updateLabel:(ccTime)dt {
-    self.count += 1;
-    [self.label setString:[NSString stringWithFormat:@"%i", self.count]];
-}
-
-- (void) scale:(ccTime)dt {
-    
-    self.position = ccp( self.position.x + 100*dt, self.position.y );
-    if (self.position.x > 480+32) {
-        self.position = ccp( -32, self.position.y );
+    if (self.count < self.capacity - 1) {
+        self.count += 1;
+        [self.label setColor:ccWHITE];
+    } else if (self.count == self.capacity - 1) {
+        self.count += 1;
+        [self.label setColor:ccGRAY];
+    } else {
+        [self.label setColor:ccGRAY];
     }
+    [self.label setString:[NSString stringWithFormat:@"%i", self.count]];
 }
 
 @end

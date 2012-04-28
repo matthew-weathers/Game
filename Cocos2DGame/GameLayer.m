@@ -39,8 +39,6 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
-        [self registerWithTouchDispatcher];
-        
         self.player = [Player new];
         self.player.team = blueTeam;
         self.rectLayer = rectLayer;
@@ -48,6 +46,7 @@
         
         Base *base0 = [Base spriteWithFile: @"SmallGrayBase.png"];
         base0.baseSize = small;
+        base0.capacity = 10;
         base0.tag = 0;
         base0.regenSpeed = 1.0f;
         base0.team = neutralTeam;
@@ -57,6 +56,7 @@
         
         Base *base1 = [Base spriteWithFile: @"MediumRedBase.png"];
         base1.baseSize = medium;
+        base1.capacity = 15;
         base1.regenSpeed = 0.90f;
         base1.team = redTeam;
         base1.tag = 1;
@@ -66,6 +66,7 @@
         
         Base *base2 = [Base spriteWithFile:@"LargeBlueBase.png"];
         base2.baseSize = large;
+        base2.capacity = 20;
         base2.regenSpeed = 0.80f;
         base2.team = blueTeam;
         base2.tag = 2;
@@ -79,56 +80,6 @@
     }
     return self;
 }
-
-// on "init" you need to initialize your instance
--(id) init {
-        
-    self.player = [Player new];
-    self.player.team = blueTeam;
-    
-	// always call "super" init
-	// Apple recommends to re-assign "self" with the "super" return value
-	if( (self=[super init])) {
-        [self registerWithTouchDispatcher];
-        
-        Base *base0 = [Base spriteWithFile: @"SmallGrayBase.png"];
-        base0.baseSize = small;
-        base0.tag = 0;
-        base0.regenSpeed = 1.0f;
-        base0.team = neutralTeam;
-        base0.position = ccp( 50, 80 );
-        base0.delegate = self;
-        [self addChild:base0];
-        
-        Base *base1 = [Base spriteWithFile: @"MediumRedBase.png"];
-        base1.baseSize = medium;
-        base1.regenSpeed = 0.90f;
-        base1.team = redTeam;
-        base1.tag = 1;
-        base1.position = ccp( 50, 200 );
-        base1.delegate = self;
-        [self addChild:base1];
-        
-        Base *base2 = [Base spriteWithFile:@"LargeBlueBase.png"];
-        base2.baseSize = large;
-        base2.regenSpeed = 0.80f;
-        base2.team = blueTeam;
-        base2.tag = 2;
-        base2.position = ccp( 150, 100);
-        base2.delegate = self;
-        [self addChild:base2];
-        
-        self.bases = [NSArray arrayWithObjects:base0, base1, base2, nil];
-        
-        [self.bases makeObjectsPerformSelector:@selector(start)];
-    
-        RectangleLayer *rl = [RectangleLayer new];
-        rl.delegate = self;
-        [self addChild:[rl scene]];
-	}
-	return self;
-}
-
 
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc
@@ -230,15 +181,6 @@
     if ([self isGameOver]) {
         [[CCDirector sharedDirector] pause];
     }
-}
-
-- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-}
-
-- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-}
-
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 }
 
 - (void)highlightEndedWithInitialPoint:(CGPoint)initPoint finalPoint:(CGPoint)finalPoint {

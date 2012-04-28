@@ -18,6 +18,7 @@
 @property (nonatomic, assign) ccColor3B defaultColor;
 @property (nonatomic, assign) id<BaseDelegate> delegate;
 @property (nonatomic, assign) int count;
+@property (nonatomic, assign) int capacity;
 @property (nonatomic, retain) CCLabelTTF *label;
 @property (nonatomic, assign) int toTag;
 @property (nonatomic, assign) Team team;
