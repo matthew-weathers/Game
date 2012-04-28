@@ -35,16 +35,16 @@
 	return scene;
 }
 
--(id)initWithRectangleLayer:(RectangleLayer *)rectLayer {
-    self.player = [Player new];
-    self.player.team = blueTeam;
-    self.rectLayer = rectLayer;
-    self.rectLayer.delegate = self;
-    
+-(id)initWithRectangleLayer:(RectangleLayer *)rectLayer {    
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
         [self registerWithTouchDispatcher];
+        
+        self.player = [Player new];
+        self.player.team = blueTeam;
+        self.rectLayer = rectLayer;
+        self.rectLayer.delegate = self;
         
         Base *base0 = [Base spriteWithFile: @"SmallGrayBase.png"];
         base0.baseSize = small;
@@ -181,8 +181,6 @@
             [self addChild:t];
             
             [t moveToPosition:base.position];
-            
-            break;
         }
     }
     
@@ -264,7 +262,7 @@
     CGRect rect = CGRectMake(x, y, width, height);
     
     for (Base *b in self.bases) {
-        if (CGRectIntersectsRect(rect, [b boundingBox])) {
+        if (CGRectIntersectsRect(rect, [b boundingBox]) && self.player.team == b.team) {
             [b setSelection:YES];
         } else {
             [b setSelection:NO];
