@@ -36,8 +36,8 @@
 
 -(void)start {
     self.label = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.count] fontName:@"Marker Felt" fontSize:24.0];
-    self.label.position = ccp(self.label.position.x + 25.0, self.label.position.y + 25.0);
-    [self addChild:self.label];    
+    self.label.position = self.position;
+    [self.parent addChild:self.label];  
 }
 
 -(void)setTeam:(Team)team {
