@@ -11,6 +11,7 @@
 #import "GameLayer.h"
 #import "Player.h"
 #import "RectangleLayer.h"
+#import "PauseLayer.h"
 
 // HelloWorldLayer implementation
 @implementation GameLayer
@@ -292,6 +293,9 @@
     }
     
     if ([self isGameOver]) {
+        PauseLayer *pl = [PauseLayer node];
+        [self addChild:pl];
+        
         [[CCDirector sharedDirector] pause];
     }
 }
