@@ -164,6 +164,16 @@
         }
     }
     
+    for (Base *red in redBases) {
+        for (Base *blue in blueBases) {
+            if ((blue.count >= blue.capacity) && (red.count/2 > blue.count)) {
+                [self attackFrom:red :blue];
+            } else if (red.count/2 >= blue.count + 1.5) {
+                [self attackFrom:red :blue];
+            }
+        }
+    }
+    
 //    for (Base *b in self.bases) {
 //        if (b.team == redTeam) {
 //            for (Base *b2 in self.bases) {
