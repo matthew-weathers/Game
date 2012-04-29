@@ -445,6 +445,8 @@
 				7F4D5B2A15409FD70017002C /* Base.m */,
 				7F4D5B2C1540A3750017002C /* GameLayer.h */,
 				7F4D5B2D1540A3750017002C /* GameLayer.m */,
+				C991BCBA154DE007009A1DB6 /* MainMenuLayer.h */,
+				C991BCBB154DE007009A1DB6 /* MainMenuLayer.m */,
 				C9FE0D22154C77A900766883 /* RectangleLayer.h */,
 				C9FE0D23154C77A900766883 /* RectangleLayer.m */,
 				7F4D5B0715404F9C0017002C /* RootViewController.h */,
@@ -457,8 +459,6 @@
 				7F4D59B315404F9A0017002C /* Resources */,
 				7F4D59C715404F9A0017002C /* libs */,
 				7F4D5B0015404F9C0017002C /* Supporting Files */,
-				C991BCBA154DE007009A1DB6 /* MainMenuLayer.h */,
-				C991BCBB154DE007009A1DB6 /* MainMenuLayer.m */,
 			);
 			name = Game;
 			path = Cocos2DGame;
