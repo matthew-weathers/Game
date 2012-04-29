@@ -49,7 +49,7 @@
         base0.baseSize = small;
         base0.capacity = 30;
         base0.tag = 0;
-        base0.regenSpeed = 1.0f;
+        base0.regenSpeed = 0.9f;
         base0.team = redTeam;
         base0.position = ccp( 50, 80 );
         base0.delegate = self;
@@ -58,7 +58,7 @@
         Base *base1 = [Base spriteWithFile: @"MediumRedBase.png"];
         base1.baseSize = medium;
         base1.capacity = 10;
-        base1.regenSpeed = 0.90f;
+        base1.regenSpeed = 1.0f;
         base1.team = redTeam;
         base1.tag = 1;
         base1.position = ccp( 50, 200 );
@@ -68,7 +68,7 @@
         Base *base2 = [Base spriteWithFile:@"LargeBlueBase.png"];
         base2.baseSize = large;
         base2.capacity = 5;
-        base2.regenSpeed = 0.80f;
+        base2.regenSpeed = 1.1f;
         base2.team = blueTeam;
         base2.tag = 2;
         base2.position = ccp( 150, 100);
@@ -78,7 +78,7 @@
         Base *base3 = [Base spriteWithFile:@"MediumBlueBase.png"];
         base3.baseSize = medium;
         base3.capacity = 5;
-        base3.regenSpeed = 0.80f;
+        base3.regenSpeed = 1.0f;
         base3.team = blueTeam;
         base3.tag = 3;
         base3.position = ccp( 250, 100);
@@ -88,7 +88,7 @@
         Base *base4 = [Base spriteWithFile:@"SmallBlueBase.png"];
         base4.baseSize = small;
         base4.capacity = 5;
-        base4.regenSpeed = 0.80f;
+        base4.regenSpeed = 0.90f;
         base4.team = blueTeam;
         base4.tag = 4;
         base4.position = ccp( 350, 100);
@@ -97,9 +97,9 @@
         
         // Sort the initial array based on island size (helpful for AI)
         self.bases = [NSArray arrayWithObjects:base2, base1, base3, base0, base4, nil];
-        
         [self.bases makeObjectsPerformSelector:@selector(start)];
-        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(makeDecision:) userInfo:nil repeats:YES];
+        
+        [self schedule:@selector(nextFrame:)];
     }
     return self;
 }
@@ -132,7 +132,7 @@
     [t moveToPosition:victim.position];
 }
 
--(void)makeDecision:(id)sender {
+-(void)nextFrame:(ccTime)dt {
     
     NSMutableArray *redBases = [NSMutableArray array];
     NSMutableArray *blueBases = [NSMutableArray array];
@@ -178,42 +178,12 @@
             if (shouldBreak) break;
         }
     }
-    
-//    for (Base *b in self.bases) {
-//        if (b.team == redTeam) {
-//            for (Base *b2 in self.bases) {
-//                if ((b.tag != b2.tag) && (b.team != b2.team)) {
-//                    if (b.count/2 > b2.count + 2) {
-//                        int amount = b.count/2;
-//                        b.count -= amount;
-//                        [b updateLabel:0];
-//                        
-//                        Transport *t;
-//                        t = [Transport spriteWithFile:@"RedArrow.png"];   
-//                        t.team = redTeam;
-//                        t.toTag = b2.tag;
-//                        t.amount = amount;
-//                        t.position = b.position;
-//                        t.delegate = self;
-//                        
-//                        // Calculation
-//                        CGPoint difference = ccpSub(b.position, b2.position);
-//                        CGFloat rotationRadians = ccpToAngle(difference);
-//                        CGFloat rotationDegrees = -CC_RADIANS_TO_DEGREES(rotationRadians);
-//                        rotationDegrees += 180.0f;
-//                        CGFloat rotateByDegrees = rotationDegrees - b.rotation;
-//                        
-//                        CCRotateBy * turnBy = [CCRotateBy actionWithDuration:0.0f angle:rotateByDegrees];
-//                        [t runAction:turnBy];
-//                        
-//                        [self addChild:t];
-//                        
-//                        [t moveToPosition:b2.position];
-//                    }
-//                }
-//            }
-//        }
-//    }
+
+    for (Base *b in self.bases) {
+        [b updateLabel:dt];
+    }
+//    [self.bases makeObjectsPerformSelector:@selector(updateLabel:)];
+//    [self.bases makeObjectsPerformSelector:@selector(updateLabel:) withObject:[NSNumber numberWithFloat:dt]];
 }
 
 // on "dealloc" you need to release all your retained objects
@@ -301,15 +271,17 @@
         }
     }
     
+    float toCount = floorf(to.count);
+    
     if (to.team == sprite.team) {
         to.count += sprite.amount;                
         [to updateLabel:0];        
     } else {
-        if (to.count == sprite.amount) {
+        if (toCount == sprite.amount) {
             to.count = 0;
-            to.team = neutralTeam;
             [to updateLabel:0];
-        } else if (to.count < sprite.amount) {
+            to.team = neutralTeam;
+        } else if (toCount < sprite.amount) {
             to.count = sprite.amount - to.count;
             to.team = sprite.team;
             [to updateLabel:0];

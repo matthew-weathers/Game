@@ -49,7 +49,7 @@
 
     if (team != neutralTeam) {
         [self unschedule:@selector(updateLabel:)];
-        [self schedule:@selector(updateLabel:) interval:self.regenSpeed];
+      //  [self schedule:@selector(updateLabel:) interval:self.regenSpeed];
     }
 }
 - (void)onEnter
@@ -91,16 +91,18 @@
 }
 
 - (void)updateLabel:(ccTime)dt {
-    if (self.count < self.capacity - 1) {
-        self.count += 1;
+    if (self.team == neutralTeam) return;
+    
+    if (self.count < self.capacity) {
+        self.count += self.regenSpeed*dt;
         [self.label setColor:ccWHITE];
     } else if (self.count == self.capacity - 1) {
-        self.count += 1;
+        self.count += dt;
         [self.label setColor:ccGRAY];
     } else {
         [self.label setColor:ccGRAY];
     }
-    [self.label setString:[NSString stringWithFormat:@"%i", self.count]];
+    [self.label setString:[NSString stringWithFormat:@"%1.0f", self.count]];
 }
 
 @end
