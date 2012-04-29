@@ -45,19 +45,19 @@
         self.rectLayer = rectLayer;
         self.rectLayer.delegate = self;
         
-        Base *base0 = [Base spriteWithFile: @"SmallGrayBase.png"];
+        Base *base0 = [Base spriteWithFile: @"SmallRedBase.png"];
         base0.baseSize = small;
-        base0.capacity = 10;
+        base0.capacity = 30;
         base0.tag = 0;
         base0.regenSpeed = 1.0f;
-        base0.team = neutralTeam;
+        base0.team = redTeam;
         base0.position = ccp( 50, 80 );
         base0.delegate = self;
         [self addChild:base0];
         
         Base *base1 = [Base spriteWithFile: @"MediumRedBase.png"];
         base1.baseSize = medium;
-        base1.capacity = 15;
+        base1.capacity = 10;
         base1.regenSpeed = 0.90f;
         base1.team = redTeam;
         base1.tag = 1;
@@ -153,17 +153,7 @@
         }
     }
     
-    // If any of the bases are at capacity, move the troops elsewhere to allow for more generation to happen
-    for (Base *red in redBases) {
-        if (red.count >= red.capacity) {
-            for (Base *blue in blueBases) {
-                if (red.count/2 >= blue.count + 1.5) {
-                    [self attackFrom:red :blue];
-                }
-            }
-        }
-    }
-    
+    // If any of the red bases have enough troops to capture a blue territory, do it.
     for (Base *red in redBases) {
         for (Base *blue in blueBases) {
             if ((blue.count >= blue.capacity) && (red.count/2 > blue.count)) {
@@ -171,6 +161,21 @@
             } else if (red.count/2 >= blue.count + 1.5) {
                 [self attackFrom:red :blue];
             }
+        }
+    }
+    
+    // If any of the bases are at capacity, move the troops elsewhere to allow for more generation to happen
+    BOOL shouldBreak = NO;
+    for (Base *red in redBases) {
+        if (red.count >= red.capacity) {
+            for (Base *otherRed in redBases) {
+                if (otherRed.count + red.count/2 < otherRed.capacity) {
+                    [self attackFrom:red :otherRed];
+                    shouldBreak = YES;
+                    break;
+                }
+            }
+            if (shouldBreak) break;
         }
     }
     
