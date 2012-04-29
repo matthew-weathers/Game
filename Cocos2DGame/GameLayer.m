@@ -15,6 +15,7 @@
 // HelloWorldLayer implementation
 @implementation GameLayer
 
+
 @synthesize bases = _bases;
 @synthesize player = _player;
 @synthesize rectLayer = _rectLayer;
@@ -66,7 +67,7 @@
         
         Base *base2 = [Base spriteWithFile:@"LargeBlueBase.png"];
         base2.baseSize = large;
-        base2.capacity = 20;
+        base2.capacity = 5;
         base2.regenSpeed = 0.80f;
         base2.team = blueTeam;
         base2.tag = 2;
@@ -74,7 +75,28 @@
         base2.delegate = self;
         [self addChild:base2];
         
-        self.bases = [NSArray arrayWithObjects:base0, base1, base2, nil];
+        Base *base3 = [Base spriteWithFile:@"MediumBlueBase.png"];
+        base3.baseSize = medium;
+        base3.capacity = 5;
+        base3.regenSpeed = 0.80f;
+        base3.team = blueTeam;
+        base3.tag = 3;
+        base3.position = ccp( 250, 100);
+        base3.delegate = self;
+        [self addChild:base3];
+        
+        Base *base4 = [Base spriteWithFile:@"SmallBlueBase.png"];
+        base4.baseSize = small;
+        base4.capacity = 5;
+        base4.regenSpeed = 0.80f;
+        base4.team = blueTeam;
+        base4.tag = 4;
+        base4.position = ccp( 350, 100);
+        base4.delegate = self;
+        [self addChild:base4];
+        
+        // Sort the initial array based on island size (helpful for AI)
+        self.bases = [NSArray arrayWithObjects:base2, base1, base3, base0, base4, nil];
         
         [self.bases makeObjectsPerformSelector:@selector(start)];
         [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(makeDecision:) userInfo:nil repeats:YES];
@@ -82,42 +104,101 @@
     return self;
 }
 
+-(void)attackFrom:(Base *)attacker :(Base *)victim {
+    int amount = attacker.count/2;
+    attacker.count -= amount;
+    [attacker updateLabel:0];
+    
+    Transport *t;
+    t = [Transport spriteWithFile:@"RedArrow.png"];   
+    t.team = redTeam;
+    t.toTag = victim.tag;
+    t.amount = amount;
+    t.position = attacker.position;
+    t.delegate = self;
+    
+    // Calculation
+    CGPoint difference = ccpSub(attacker.position, victim.position);
+    CGFloat rotationRadians = ccpToAngle(difference);
+    CGFloat rotationDegrees = -CC_RADIANS_TO_DEGREES(rotationRadians);
+    rotationDegrees += 180.0f;
+    CGFloat rotateByDegrees = rotationDegrees - attacker.rotation;
+                            
+    CCRotateBy * turnBy = [CCRotateBy actionWithDuration:0.0f angle:rotateByDegrees];
+    [t runAction:turnBy];
+                    
+    [self addChild:t];
+                            
+    [t moveToPosition:victim.position];
+}
+
 -(void)makeDecision:(id)sender {
+    
+    NSMutableArray *redBases = [NSMutableArray array];
+    NSMutableArray *blueBases = [NSMutableArray array];
+    NSMutableArray *neutralBases = [NSMutableArray array];
+    
+    // Sort into team arrays
     for (Base *b in self.bases) {
-        if (b.team == redTeam) {
-            for (Base *b2 in self.bases) {
-                if ((b.tag != b2.tag) && (b.team != b2.team)) {
-                    if (b.count/2 > b2.count + 2) {
-                        int amount = b.count/2;
-                        b.count -= amount;
-                        [b updateLabel:0];
-                        
-                        Transport *t;
-                        t = [Transport spriteWithFile:@"RedArrow.png"];   
-                        t.team = redTeam;
-                        t.toTag = b2.tag;
-                        t.amount = amount;
-                        t.position = b.position;
-                        t.delegate = self;
-                        
-                        // Calculation
-                        CGPoint difference = ccpSub(b.position, b2.position);
-                        CGFloat rotationRadians = ccpToAngle(difference);
-                        CGFloat rotationDegrees = -CC_RADIANS_TO_DEGREES(rotationRadians);
-                        rotationDegrees += 180.0f;
-                        CGFloat rotateByDegrees = rotationDegrees - b.rotation;
-                        
-                        CCRotateBy * turnBy = [CCRotateBy actionWithDuration:0.0f angle:rotateByDegrees];
-                        [t runAction:turnBy];
-                        
-                        [self addChild:t];
-                        
-                        [t moveToPosition:b2.position];
-                    }
+        switch (b.team) {
+            case redTeam:
+                [redBases addObject:b];
+                break;
+            case blueTeam:
+                [blueBases addObject:b];
+                break;
+            case neutralTeam:
+                [neutralBases addObject:b];
+                break;
+        }
+    }
+    
+    // If any of the bases are at capacity, move the troops elsewhere to allow for more generation to happen
+    for (Base *red in redBases) {
+        if (red.count >= red.capacity) {
+            for (Base *blue in blueBases) {
+                if (red.count/2 >= blue.count + 1.5) {
+                    [self attackFrom:red :blue];
                 }
             }
         }
     }
+    
+//    for (Base *b in self.bases) {
+//        if (b.team == redTeam) {
+//            for (Base *b2 in self.bases) {
+//                if ((b.tag != b2.tag) && (b.team != b2.team)) {
+//                    if (b.count/2 > b2.count + 2) {
+//                        int amount = b.count/2;
+//                        b.count -= amount;
+//                        [b updateLabel:0];
+//                        
+//                        Transport *t;
+//                        t = [Transport spriteWithFile:@"RedArrow.png"];   
+//                        t.team = redTeam;
+//                        t.toTag = b2.tag;
+//                        t.amount = amount;
+//                        t.position = b.position;
+//                        t.delegate = self;
+//                        
+//                        // Calculation
+//                        CGPoint difference = ccpSub(b.position, b2.position);
+//                        CGFloat rotationRadians = ccpToAngle(difference);
+//                        CGFloat rotationDegrees = -CC_RADIANS_TO_DEGREES(rotationRadians);
+//                        rotationDegrees += 180.0f;
+//                        CGFloat rotateByDegrees = rotationDegrees - b.rotation;
+//                        
+//                        CCRotateBy * turnBy = [CCRotateBy actionWithDuration:0.0f angle:rotateByDegrees];
+//                        [t runAction:turnBy];
+//                        
+//                        [self addChild:t];
+//                        
+//                        [t moveToPosition:b2.position];
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 // on "dealloc" you need to release all your retained objects
@@ -197,7 +278,13 @@
 }
 
 -(void)transportFinished:(Transport *)sprite {
-    Base *to = [self.bases objectAtIndex:sprite.toTag];
+    Base *to;
+    for (Base *b in self.bases) {
+        if (b.tag == sprite.toTag) {
+            to = b;
+            break;
+        }
+    }
     
     if (to.team == sprite.team) {
         to.count += sprite.amount;                
