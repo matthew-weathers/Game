@@ -7,6 +7,7 @@
 //
 
 #import "Transport.h"
+#define SPEED 60.0f
 
 @implementation Transport
 
@@ -40,14 +41,21 @@
     [super onExit];
 }   
 
+-(float)getTimeFromPoint:(CGPoint)from toPoint:(CGPoint)to speed:(float)speed {
+    return sqrtf(powf(to.x-from.x, 2) + powf(to.y-from.y, 2))/speed;
+}
+
 -(void)moveToPosition:(CGPoint)point {
     self.label = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.amount] fontName:@"Marker Felt" fontSize:24.0];
     self.label.position = self.position;
 
     [self.parent addChild:self.label];
-    [self.label runAction:[CCMoveTo actionWithDuration:2.0 position:point]];
-    [self runAction:[CCMoveTo actionWithDuration:2.0 position:point]];
-    [self schedule:@selector(moveFinished:) interval:2.0];
+    
+    float velocity = [self getTimeFromPoint:self.position toPoint:point speed:SPEED];
+    
+    [self.label runAction:[CCMoveTo actionWithDuration:velocity position:point]];
+    [self runAction:[CCMoveTo actionWithDuration:velocity position:point]];
+    [self schedule:@selector(moveFinished:) interval:velocity];
 }
 
 -(void)moveFinished:(ccTime)dt {
