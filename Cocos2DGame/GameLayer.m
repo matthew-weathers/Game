@@ -18,6 +18,7 @@
 
 
 @synthesize bases = _bases;
+@synthesize transports = _transports;
 @synthesize player = _player;
 @synthesize rectLayer = _rectLayer;
 
@@ -100,6 +101,7 @@
         self.bases = [NSArray arrayWithObjects:base2, base1, base3, base0, base4, nil];
         [self.bases makeObjectsPerformSelector:@selector(start)];
         
+        self.transports = [NSMutableArray array];
         [self schedule:@selector(nextFrame:)];
         [self schedule:@selector(makeDecision:) interval:5.0f];
     }
@@ -118,6 +120,7 @@
     t.amount = amount;
     t.position = attacker.position;
     t.delegate = self;
+    [self.transports addObject:t];
     
     // Calculation
     CGPoint difference = ccpSub(attacker.position, victim.position);
@@ -163,12 +166,10 @@
     // If any of the red bases have enough troops to capture a blue territory, do it.
     for (Base *red in redBases) {
         for (Base *blue in blueBases) {
-            if ((blue.count >= blue.capacity) && (red.count/2 > blue.count)) {
+            if ((blue.count >= blue.capacity) && ((int)red.count/2 > (int)blue.count)) {
                 [self attackFrom:red :blue];
-                return;
-            } else if (red.count/2 >= blue.count + 1.5) {
+            } else if (red.count/2 > blue.count + sqrtf(powf(blue.position.x-red.position.x, 2) + powf(blue.position.y-red.position.y, 2))/60.0) {
                 [self attackFrom:red :blue];
-                return;
             }
         }
     }
@@ -179,7 +180,6 @@
             for (Base *otherRed in redBases) {
                 if (otherRed.count + red.count/2 < otherRed.capacity) {
                     [self attackFrom:red :otherRed];
-                    return;
                 }
             }
        }
@@ -212,31 +212,7 @@
             // move half of time to cocosGuy
             shouldSelect = NO;
             
-            Transport *t;
-            if (b.team == redTeam) {
-                t = [Transport spriteWithFile:@"RedArrow.png"];   
-            } else if (b.team == blueTeam) {
-                t = [Transport spriteWithFile:@"BlueArrow.png"];
-            }
-            t.team = b.team;
-            t.toTag = base.tag;
-            t.amount = amount;
-            t.position = b.position;
-            t.delegate = self;
-            
-            // Calculation
-            CGPoint difference = ccpSub(b.position, base.position);
-            CGFloat rotationRadians = ccpToAngle(difference);
-            CGFloat rotationDegrees = -CC_RADIANS_TO_DEGREES(rotationRadians);
-            rotationDegrees += 180.0f;
-            CGFloat rotateByDegrees = rotationDegrees - b.rotation;
-            
-            CCRotateBy * turnBy = [CCRotateBy actionWithDuration:0.0f angle:rotateByDegrees];
-            [t runAction:turnBy];
-            
-            [self addChild:t];
-            
-            [t moveToPosition:base.position];
+            [self attackFrom:b :base];
         }
     }
     
@@ -295,6 +271,7 @@
         PauseLayer *pl = [PauseLayer node];
         [self addChild:pl];
         
+        [self.transports makeObjectsPerformSelector:@selector(remove)];
         [[CCDirector sharedDirector] pause];
     }
 }

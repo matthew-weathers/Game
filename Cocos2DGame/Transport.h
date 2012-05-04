@@ -22,5 +22,6 @@
 @property (nonatomic, assign) Team team;
 
 -(void)moveToPosition:(CGPoint)point;
+-(void)remove;
 
 @end

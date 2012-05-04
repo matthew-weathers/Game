@@ -64,4 +64,9 @@
     [self.delegate transportFinished:self];
 }
 
+-(void)remove {
+    [self.label removeFromParentAndCleanup:YES];
+    [self removeFromParentAndCleanup:YES];
+}
+
 @end
