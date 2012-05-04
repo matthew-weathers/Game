@@ -101,6 +101,7 @@
         [self.bases makeObjectsPerformSelector:@selector(start)];
         
         [self schedule:@selector(nextFrame:)];
+        [self schedule:@selector(makeDecision:) interval:5.0f];
     }
     return self;
 }
@@ -134,7 +135,12 @@
 }
 
 -(void)nextFrame:(ccTime)dt {
-    
+    for (Base *b in self.bases) {
+        [b updateLabel:dt];
+    }
+}
+
+-(void)makeDecision:(ccTime)dt {
     NSMutableArray *redBases = [NSMutableArray array];
     NSMutableArray *blueBases = [NSMutableArray array];
     NSMutableArray *neutralBases = [NSMutableArray array];
@@ -159,32 +165,25 @@
         for (Base *blue in blueBases) {
             if ((blue.count >= blue.capacity) && (red.count/2 > blue.count)) {
                 [self attackFrom:red :blue];
+                return;
             } else if (red.count/2 >= blue.count + 1.5) {
                 [self attackFrom:red :blue];
+                return;
             }
         }
     }
     
     // If any of the bases are at capacity, move the troops elsewhere to allow for more generation to happen
-    BOOL shouldBreak = NO;
     for (Base *red in redBases) {
         if (red.count >= red.capacity) {
             for (Base *otherRed in redBases) {
                 if (otherRed.count + red.count/2 < otherRed.capacity) {
                     [self attackFrom:red :otherRed];
-                    shouldBreak = YES;
-                    break;
+                    return;
                 }
             }
-            if (shouldBreak) break;
-        }
+       }
     }
-
-    for (Base *b in self.bases) {
-        [b updateLabel:dt];
-    }
-//    [self.bases makeObjectsPerformSelector:@selector(updateLabel:)];
-//    [self.bases makeObjectsPerformSelector:@selector(updateLabel:) withObject:[NSNumber numberWithFloat:dt]];
 }
 
 // on "dealloc" you need to release all your retained objects
