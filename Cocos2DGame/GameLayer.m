@@ -114,8 +114,12 @@
     [attacker updateLabel:0];
     
     Transport *t;
-    t = [Transport spriteWithFile:@"RedArrow.png"];   
-    t.team = redTeam;
+    if (attacker.team == redTeam) {
+        t = [Transport spriteWithFile:@"RedArrow.png"];   
+    } else {
+        t = [Transport spriteWithFile:@"BlueArrow.png"];
+    }
+    t.team = attacker.team;
     t.toTag = victim.tag;
     t.amount = amount;
     t.position = attacker.position;
@@ -202,10 +206,6 @@
     
     for (Base *b in self.bases) {
         if (b.selected && ![b isEqual:base]) {
-            int amount = b.count/2;
-            b.count -= amount;
-            [b updateLabel:0];
-            
             [b setSelection:NO];
             [base setSelection:NO];
             
