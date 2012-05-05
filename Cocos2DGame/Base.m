@@ -35,9 +35,18 @@
 }
 
 -(void)start {
-    self.label = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.count] fontName:@"Marker Felt" fontSize:24.0];
+    self.label = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.count] fontName:@"Marker Felt" fontSize:18.0];
     self.label.position = self.position;
-    [self.parent addChild:self.label];  
+    [self.parent addChild:self.label]; 
+    
+    CCLabelTTF *capacityLabel = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.capacity] fontName:@"Marker Felt" fontSize:12.0];
+
+    capacityLabel.position = ccp(self.position.x + self.contentSize.width/2 - 5, self.position.y - self.contentSize.height/2 - 5);
+    [self.parent addChild:capacityLabel];
+    
+    CCLabelTTF *regenerationLabel = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%0.1f", self.regenSpeed] fontName:@"Marker Felt" fontSize:12.0];
+    regenerationLabel.position = ccp(self.position.x - self.contentSize.width/2 +5, self.position.y - self.contentSize.height/2 - 5);
+    [self.parent addChild:regenerationLabel];
 }
 
 -(void)setTeam:(Team)team {
