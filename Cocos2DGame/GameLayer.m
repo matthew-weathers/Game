@@ -47,17 +47,17 @@
         self.rectLayer = rectLayer;
         self.rectLayer.delegate = self;
         
-        Base *base0 = [Base spriteWithFile: @"SmallRedBase.png"];
+        Base *base0 = [Base spriteWithFile: @"grayBase.png"];
         base0.baseSize = small;
         base0.capacity = 30;
         base0.tag = 0;
         base0.regenSpeed = 0.9f;
-        base0.team = redTeam;
+        base0.team = neutralTeam;
         base0.position = ccp( 50, 80 );
         base0.delegate = self;
         [self addChild:base0];
         
-        Base *base1 = [Base spriteWithFile: @"MediumRedBase.png"];
+        Base *base1 = [Base spriteWithFile: @"redBase.png"];
         base1.baseSize = medium;
         base1.capacity = 10;
         base1.regenSpeed = 1.0f;
@@ -67,7 +67,7 @@
         base1.delegate = self;
         [self addChild:base1];
         
-        Base *base2 = [Base spriteWithFile:@"LargeBlueBase.png"];
+        Base *base2 = [Base spriteWithFile:@"blueBase.png"];
         base2.baseSize = large;
         base2.capacity = 5;
         base2.regenSpeed = 1.1f;
@@ -77,7 +77,7 @@
         base2.delegate = self;
         [self addChild:base2];
         
-        Base *base3 = [Base spriteWithFile:@"MediumBlueBase.png"];
+        Base *base3 = [Base spriteWithFile:@"blueBase.png"];
         base3.baseSize = medium;
         base3.capacity = 5;
         base3.regenSpeed = 1.0f;
@@ -87,7 +87,7 @@
         base3.delegate = self;
         [self addChild:base3];
         
-        Base *base4 = [Base spriteWithFile:@"SmallBlueBase.png"];
+        Base *base4 = [Base spriteWithFile:@"blueBase.png"];
         base4.baseSize = small;
         base4.capacity = 5;
         base4.regenSpeed = 0.90f;

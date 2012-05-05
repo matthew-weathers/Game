@@ -25,14 +25,8 @@ typedef enum {
     blueTeam
 } Team;
 
-#define FILENAME_FOR_TEAM_SIZE(team, baseSize) team == redTeam && baseSize == small ? @"SmallRedBase.png" :\
-team == redTeam && baseSize == medium ? @"MediumRedBase.png" :\
-team == redTeam && baseSize == large ? @"LargeRedBase.png" :\
-team == blueTeam && baseSize == small ? @"SmallBlueBase.png" :\
-team == blueTeam && baseSize == medium ?@"MediumBlueBase.png" :\
-team == blueTeam && baseSize == large ? @"LargeBlueBase.png" :\
-team == neutralTeam && baseSize == small ? @"SmallGrayBase.png" :\
-team == neutralTeam && baseSize == medium ?  @"MediumGrayBase.png" :\
-team == neutralTeam && baseSize == large ?  @"LargeGrayBase.png" : @"";\
+#define FILENAME_FOR_TEAM(team) team == redTeam ? @"redBase.png" :\
+team == blueTeam ? @"blueBase.png" :\
+team == neutralTeam ? @"grayBase.png" : @"";\
 
 #endif
