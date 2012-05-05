@@ -115,9 +115,9 @@
     
     Transport *t;
     if (attacker.team == redTeam) {
-        t = [Transport spriteWithFile:@"RedArrow.png"];   
+        t = [Transport spriteWithFile:@"redTransport.png"];   
     } else {
-        t = [Transport spriteWithFile:@"BlueArrow.png"];
+        t = [Transport spriteWithFile:@"blueTransport.png"];
     }
     t.team = attacker.team;
     t.toTag = victim.tag;

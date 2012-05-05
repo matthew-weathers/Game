@@ -25,7 +25,7 @@
 - (id)init 
 {
     if (self = [super init]) {
-
+        [self runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:2.0f angle:360.0f]]];
     }
     
     return self;
@@ -46,7 +46,7 @@
 }
 
 -(void)moveToPosition:(CGPoint)point {
-    self.label = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.amount] fontName:@"Marker Felt" fontSize:24.0];
+    self.label = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.amount] fontName:@"Marker Felt" fontSize:12.0f];
     self.label.position = self.position;
 
     [self.parent addChild:self.label];
