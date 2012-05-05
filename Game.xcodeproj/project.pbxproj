@@ -129,6 +129,7 @@
 		C9DEB02B1555BDFA00D9240C /* greenBase.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB0281555BDFA00D9240C /* greenBase.png */; };
 		C9DEB02C1555BDFA00D9240C /* yellowBase.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB0291555BDFA00D9240C /* yellowBase.png */; };
 		C9DEB02D1555BDFA00D9240C /* yellowTransport.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB02A1555BDFA00D9240C /* yellowTransport.png */; };
+		C9DEB0331555D19E00D9240C /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DEB0321555D19E00D9240C /* NSMutableArray+Shuffling.m */; };
 		C9FE0D24154C77A900766883 /* RectangleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE0D23154C77A900766883 /* RectangleLayer.m */; };
 /* End PBXBuildFile section */
 
@@ -380,6 +381,8 @@
 		C9DEB0281555BDFA00D9240C /* greenBase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBase.png; sourceTree = "<group>"; };
 		C9DEB0291555BDFA00D9240C /* yellowBase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowBase.png; sourceTree = "<group>"; };
 		C9DEB02A1555BDFA00D9240C /* yellowTransport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowTransport.png; sourceTree = "<group>"; };
+		C9DEB0311555D19E00D9240C /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
+		C9DEB0321555D19E00D9240C /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 		C9FE0D22154C77A900766883 /* RectangleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectangleLayer.h; sourceTree = "<group>"; };
 		C9FE0D23154C77A900766883 /* RectangleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectangleLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -460,6 +463,8 @@
 				7F4D5B0015404F9C0017002C /* Supporting Files */,
 				C991BCC1154DF72D009A1DB6 /* PauseLayer.h */,
 				C991BCC2154DF72D009A1DB6 /* PauseLayer.m */,
+				C9DEB0311555D19E00D9240C /* NSMutableArray+Shuffling.h */,
+				C9DEB0321555D19E00D9240C /* NSMutableArray+Shuffling.m */,
 			);
 			name = Game;
 			path = Cocos2DGame;
@@ -970,6 +975,7 @@
 				C9FE0D24154C77A900766883 /* RectangleLayer.m in Sources */,
 				C991BCBC154DE007009A1DB6 /* MainMenuLayer.m in Sources */,
 				C991BCC3154DF72D009A1DB6 /* PauseLayer.m in Sources */,
+				C9DEB0331555D19E00D9240C /* NSMutableArray+Shuffling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

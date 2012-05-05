@@ -12,6 +12,7 @@
 #import "Player.h"
 #import "RectangleLayer.h"
 #import "PauseLayer.h"
+#import "NSMutableArray+Shuffling.h"
 
 // HelloWorldLayer implementation
 @implementation GameLayer
@@ -102,7 +103,7 @@
         self.teamsPlaying = [NSArray arrayWithObjects:[NSNumber numberWithInt:redTeam], [NSNumber numberWithInt:blueTeam], [NSNumber numberWithInt:greenTeam], [NSNumber numberWithInt:yellowTeam], nil];
         
         // Sort the initial array based on island size (helpful for AI)
-        self.bases = [NSArray arrayWithObjects:base2, base1, base3, base0, base4, nil];
+        self.bases = [NSMutableArray arrayWithObjects:base2, base1, base3, base0, base4, nil];
         [self.bases makeObjectsPerformSelector:@selector(start)];
         
         self.transports = [NSMutableArray array];
@@ -148,6 +149,7 @@
 }
 
 -(void)makeDecision:(ccTime)dt forTeam:(Team)team {
+    [self.bases shuffle];
     NSMutableArray *teamBases = [NSMutableArray array];
     NSMutableArray *otherBases = [NSMutableArray array];
     NSMutableArray *neutralBases = [NSMutableArray array];
@@ -240,6 +242,13 @@
 -(BOOL)isGameOver {
     Team teamFound = neutralTeam;
     
+    BOOL playerDead = YES;    
+
+    for (Base *base in self.bases) {
+        if (base.team == self.player.team) playerDead = NO;
+    }
+    if (playerDead) return playerDead;
+    
     for (Base *base in self.bases) {
         if ([self.teamsPlaying containsObject:[NSNumber numberWithInt:base.team]]) {
             if (teamFound == neutralTeam) teamFound = base.team;
@@ -247,22 +256,7 @@
             if (teamFound != base.team) return NO;
         }
     }
-
-//    BOOL red = NO;
-//    BOOL blue = NO;
-//
-//    
-//    for (Base *guy in self.bases) {
-//        if (guy.team == redTeam) red = YES;
-//        if (guy.team == blueTeam) blue = YES;
-//        if (red && blue) break;
-//    }
-//    
-//    if (red && blue) {
-//        return NO;
-//    } else {
-//        return YES;
-//    }
+    
     return YES;
 }
 

@@ -14,7 +14,7 @@
 @interface GameLayer : CCLayer <BaseDelegate, TransportDelegate, RectangleLayerDelegate>
 
 @property (nonatomic, retain) Player *player;
-@property (nonatomic, retain) NSArray *bases;
+@property (nonatomic, retain) NSMutableArray *bases;
 @property (nonatomic, retain) NSMutableArray *transports;
 @property (nonatomic, retain) RectangleLayer *rectLayer;
 @property (nonatomic, retain) NSArray *teamsPlaying;
