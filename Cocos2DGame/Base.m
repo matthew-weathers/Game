@@ -18,7 +18,6 @@
 @synthesize label =_label;
 @synthesize team = _team;
 @synthesize regenSpeed = _regenSpeed;
-@synthesize baseSize = _baseSize;
 
 - (BOOL)containsTouchLocation:(UITouch *)touch
 {

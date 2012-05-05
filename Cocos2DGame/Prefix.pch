@@ -20,11 +20,11 @@ typedef enum  {
 } BaseSize;
 
 typedef enum {
-    neutralTeam,
-    redTeam,
-    blueTeam,
-    greenTeam,
-    yellowTeam
+    neutralTeam = 0,
+    redTeam = 1,
+    blueTeam = 2,
+    greenTeam = 3,
+    yellowTeam = 4
 } Team;
 
 #define BASE_NAME_FOR_TEAM(team) team == redTeam ? @"redBase.png" :\

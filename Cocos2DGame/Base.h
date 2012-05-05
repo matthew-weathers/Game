@@ -21,7 +21,6 @@
 @property (nonatomic, assign) int capacity;
 @property (nonatomic, retain) CCLabelTTF *label;
 @property (nonatomic, assign) Team team;
-@property (nonatomic, assign) BaseSize baseSize;
 
 @property (nonatomic, assign) float regenSpeed;
 

@@ -49,61 +49,80 @@
         self.rectLayer = rectLayer;
         self.rectLayer.delegate = self;
         
-        Base *base0 = [Base spriteWithFile: @"grayBase.png"];
-        base0.baseSize = small;
-        base0.capacity = 30;
-        base0.tag = 0;
-        base0.regenSpeed = 0.9f;
-        base0.team = neutralTeam;
-        base0.position = ccp( 50, 80 );
-        base0.delegate = self;
-        [self addChild:base0];
+        self.bases = [NSMutableArray array];
         
-        Base *base1 = [Base spriteWithFile: @"redBase.png"];
-        base1.baseSize = medium;
-        base1.capacity = 10;
-        base1.regenSpeed = 1.0f;
-        base1.team = redTeam;
-        base1.tag = 1;
-        base1.position = ccp( 50, 200 );
-        base1.delegate = self;
-        [self addChild:base1];
+        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Levels" ofType:@"plist"];
+        NSArray *levelsArray = [[NSDictionary dictionaryWithContentsOfFile:plistPath] objectForKey:@"levels"];
         
-        Base *base2 = [Base spriteWithFile:@"greenBase.png"];
-        base2.baseSize = large;
-        base2.capacity = 5;
-        base2.regenSpeed = 1.1f;
-        base2.team = greenTeam;
-        base2.tag = 2;
-        base2.position = ccp( 150, 100);
-        base2.delegate = self;
-        [self addChild:base2];
+        NSDictionary *level = [levelsArray objectAtIndex:0];
         
-        Base *base3 = [Base spriteWithFile:@"yellowBase.png"];
-        base3.baseSize = medium;
-        base3.capacity = 5;
-        base3.regenSpeed = 1.0f;
-        base3.team = yellowTeam;
-        base3.tag = 3;
-        base3.position = ccp( 250, 100);
-        base3.delegate = self;
-        [self addChild:base3];
+        int tag = 0;
+        for (NSDictionary *baseDictionary in [level objectForKey:@"bases"]) {
+            Base *base = [Base spriteWithFile:@"grayBase.png"];
+            base.team = [[baseDictionary objectForKey:@"team"] intValue];
+            base.capacity = [[baseDictionary objectForKey:@"capacity"] intValue];
+            base.tag = tag;
+            base.regenSpeed = [[baseDictionary objectForKey:@"regenSpeed"] floatValue];
+            base.position = ccp([[baseDictionary objectForKey:@"positionX"] intValue], [[baseDictionary objectForKey:@"positionY"] intValue]);
+            base.delegate = self;
+            [self addChild:base];
+            [self.bases addObject:base];
+            tag++;
+        }
         
-        Base *base4 = [Base spriteWithFile:@"blueBase.png"];
-        base4.baseSize = small;
-        base4.capacity = 5;
-        base4.regenSpeed = 0.90f;
-        base4.team = blueTeam;
-        base4.tag = 4;
-        base4.position = ccp( 350, 100);
-        base4.delegate = self;
-        [self addChild:base4];
+//        Base *base0 = [Base spriteWithFile: @"grayBase.png"];
+//        base0.baseSize = small;
+//        base0.capacity = 30;
+//        base0.tag = 0;
+//        base0.regenSpeed = 0.9f;
+//        base0.team = neutralTeam;
+//        base0.position = ccp( 50, 80 );
+//        base0.delegate = self;
+//        [self addChild:base0];
+//        
+//        Base *base1 = [Base spriteWithFile: @"redBase.png"];
+//        base1.baseSize = medium;
+//        base1.capacity = 10;
+//        base1.regenSpeed = 1.0f;
+//        base1.team = redTeam;
+//        base1.tag = 1;
+//        base1.position = ccp( 50, 200 );
+//        base1.delegate = self;
+//        [self addChild:base1];
+//        
+//        Base *base2 = [Base spriteWithFile:@"greenBase.png"];
+//        base2.baseSize = large;
+//        base2.capacity = 5;
+//        base2.regenSpeed = 1.1f;
+//        base2.team = greenTeam;
+//        base2.tag = 2;
+//        base2.position = ccp( 150, 100);
+//        base2.delegate = self;
+//        [self addChild:base2];
+//        
+//        Base *base3 = [Base spriteWithFile:@"yellowBase.png"];
+//        base3.baseSize = medium;
+//        base3.capacity = 5;
+//        base3.regenSpeed = 1.0f;
+//        base3.team = yellowTeam;
+//        base3.tag = 3;
+//        base3.position = ccp( 250, 100);
+//        base3.delegate = self;
+//        [self addChild:base3];
+//        
+//        Base *base4 = [Base spriteWithFile:@"blueBase.png"];
+//        base4.baseSize = small;
+//        base4.capacity = 5;
+//        base4.regenSpeed = 0.90f;
+//        base4.team = blueTeam;
+//        base4.tag = 4;
+//        base4.position = ccp( 350, 100);
+//        base4.delegate = self;
+//        [self addChild:base4];
         
         // Declare the teams that are playing
         self.teamsPlaying = [NSArray arrayWithObjects:[NSNumber numberWithInt:redTeam], [NSNumber numberWithInt:blueTeam], [NSNumber numberWithInt:greenTeam], [NSNumber numberWithInt:yellowTeam], nil];
         
-        // Sort the initial array based on island size (helpful for AI)
-        self.bases = [NSMutableArray arrayWithObjects:base2, base1, base3, base0, base4, nil];
         [self.bases makeObjectsPerformSelector:@selector(start)];
         
         self.transports = [NSMutableArray array];

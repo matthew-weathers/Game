@@ -130,6 +130,7 @@
 		C9DEB02C1555BDFA00D9240C /* yellowBase.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB0291555BDFA00D9240C /* yellowBase.png */; };
 		C9DEB02D1555BDFA00D9240C /* yellowTransport.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB02A1555BDFA00D9240C /* yellowTransport.png */; };
 		C9DEB0331555D19E00D9240C /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DEB0321555D19E00D9240C /* NSMutableArray+Shuffling.m */; };
+		C9DEB0351555E27000D9240C /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB0341555E27000D9240C /* Levels.plist */; };
 		C9FE0D24154C77A900766883 /* RectangleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE0D23154C77A900766883 /* RectangleLayer.m */; };
 /* End PBXBuildFile section */
 
@@ -383,6 +384,7 @@
 		C9DEB02A1555BDFA00D9240C /* yellowTransport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowTransport.png; sourceTree = "<group>"; };
 		C9DEB0311555D19E00D9240C /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
 		C9DEB0321555D19E00D9240C /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
+		C9DEB0341555E27000D9240C /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		C9FE0D22154C77A900766883 /* RectangleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectangleLayer.h; sourceTree = "<group>"; };
 		C9FE0D23154C77A900766883 /* RectangleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectangleLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -485,6 +487,7 @@
 				7F4D59B615404F9A0017002C /* fps_images.png */,
 				7F4D59C415404F9A0017002C /* Info.plist */,
 				7F4D59C515404F9A0017002C /* iTunesArtwork */,
+				C9DEB0341555E27000D9240C /* Levels.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -861,6 +864,7 @@
 				C9DEB02B1555BDFA00D9240C /* greenBase.png in Resources */,
 				C9DEB02C1555BDFA00D9240C /* yellowBase.png in Resources */,
 				C9DEB02D1555BDFA00D9240C /* yellowTransport.png in Resources */,
+				C9DEB0351555E27000D9240C /* Levels.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
