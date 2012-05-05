@@ -22,11 +22,20 @@ typedef enum  {
 typedef enum {
     neutralTeam,
     redTeam,
-    blueTeam
+    blueTeam,
+    greenTeam,
+    yellowTeam
 } Team;
 
-#define FILENAME_FOR_TEAM(team) team == redTeam ? @"redBase.png" :\
+#define BASE_NAME_FOR_TEAM(team) team == redTeam ? @"redBase.png" :\
 team == blueTeam ? @"blueBase.png" :\
+team == greenTeam ? @"greenBase.png" :\
+team == yellowTeam ? @"yellowBase.png" :\
 team == neutralTeam ? @"grayBase.png" : @"";\
+
+#define TRANSPORT_NAME_FOR_TEAM(team) team == redTeam ? @"redTransport.png" :\
+team == blueTeam ? @"blueTransport.png" :\
+team == greenTeam ? @"greenTransport.png" :\
+team == yellowTeam ? @"yellowTransport.png" : @"";\
 
 #endif

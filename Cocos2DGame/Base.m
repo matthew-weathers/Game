@@ -43,7 +43,7 @@
 -(void)setTeam:(Team)team {
     _team = team;
     
-    NSString *string = FILENAME_FOR_TEAM(team);
+    NSString *string = BASE_NAME_FOR_TEAM(team);
 //    NSString *string = FILENAME_FOR_TEAM_SIZE(self.team, self.baseSize);
     CCTexture2D* tex = [[CCTextureCache sharedTextureCache] addImage:string];
     [self setTexture: tex];        

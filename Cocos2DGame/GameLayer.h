@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSArray *bases;
 @property (nonatomic, retain) NSMutableArray *transports;
 @property (nonatomic, retain) RectangleLayer *rectLayer;
+@property (nonatomic, retain) NSArray *teamsPlaying;
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
 -(id)initWithRectangleLayer:(RectangleLayer *)rectLayer;

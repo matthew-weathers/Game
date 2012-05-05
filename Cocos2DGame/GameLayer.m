@@ -21,6 +21,7 @@
 @synthesize transports = _transports;
 @synthesize player = _player;
 @synthesize rectLayer = _rectLayer;
+@synthesize teamsPlaying = _teamsPlaying;
 
 +(CCScene *) scene
 {
@@ -67,21 +68,21 @@
         base1.delegate = self;
         [self addChild:base1];
         
-        Base *base2 = [Base spriteWithFile:@"blueBase.png"];
+        Base *base2 = [Base spriteWithFile:@"greenBase.png"];
         base2.baseSize = large;
         base2.capacity = 5;
         base2.regenSpeed = 1.1f;
-        base2.team = blueTeam;
+        base2.team = greenTeam;
         base2.tag = 2;
         base2.position = ccp( 150, 100);
         base2.delegate = self;
         [self addChild:base2];
         
-        Base *base3 = [Base spriteWithFile:@"blueBase.png"];
+        Base *base3 = [Base spriteWithFile:@"yellowBase.png"];
         base3.baseSize = medium;
         base3.capacity = 5;
         base3.regenSpeed = 1.0f;
-        base3.team = blueTeam;
+        base3.team = yellowTeam;
         base3.tag = 3;
         base3.position = ccp( 250, 100);
         base3.delegate = self;
@@ -96,6 +97,9 @@
         base4.position = ccp( 350, 100);
         base4.delegate = self;
         [self addChild:base4];
+        
+        // Declare the teams that are playing
+        self.teamsPlaying = [NSArray arrayWithObjects:[NSNumber numberWithInt:redTeam], [NSNumber numberWithInt:blueTeam], [NSNumber numberWithInt:greenTeam], [NSNumber numberWithInt:yellowTeam], nil];
         
         // Sort the initial array based on island size (helpful for AI)
         self.bases = [NSArray arrayWithObjects:base2, base1, base3, base0, base4, nil];
@@ -113,12 +117,8 @@
     attacker.count -= amount;
     [attacker updateLabel:0];
     
-    Transport *t;
-    if (attacker.team == redTeam) {
-        t = [Transport spriteWithFile:@"redTransport.png"];   
-    } else {
-        t = [Transport spriteWithFile:@"blueTransport.png"];
-    }
+    NSString *filename = TRANSPORT_NAME_FOR_TEAM(attacker.team);
+    Transport *t = [Transport spriteWithFile:filename];
     t.team = attacker.team;
     t.toTag = victim.tag;
     t.amount = amount;
@@ -147,47 +147,63 @@
     }
 }
 
--(void)makeDecision:(ccTime)dt {
-    NSMutableArray *redBases = [NSMutableArray array];
-    NSMutableArray *blueBases = [NSMutableArray array];
+-(void)makeDecision:(ccTime)dt forTeam:(Team)team {
+    NSMutableArray *teamBases = [NSMutableArray array];
+    NSMutableArray *otherBases = [NSMutableArray array];
     NSMutableArray *neutralBases = [NSMutableArray array];
     
     // Sort into team arrays
     for (Base *b in self.bases) {
-        switch (b.team) {
-            case redTeam:
-                [redBases addObject:b];
-                break;
-            case blueTeam:
-                [blueBases addObject:b];
-                break;
-            case neutralTeam:
-                [neutralBases addObject:b];
-                break;
+        if (b.team == team) {
+            [teamBases addObject:b];
+        } else if (b.team == neutralTeam) {
+            [neutralBases addObject:b];
+        } else {
+            [neutralBases addObject:b];
         }
     }
     
-    // If any of the red bases have enough troops to capture a blue territory, do it.
-    for (Base *red in redBases) {
-        for (Base *blue in blueBases) {
-            if ((blue.count >= blue.capacity) && ((int)red.count/2 > (int)blue.count)) {
-                [self attackFrom:red :blue];
-            } else if (red.count/2 > blue.count + sqrtf(powf(blue.position.x-red.position.x, 2) + powf(blue.position.y-red.position.y, 2))/60.0) {
-                [self attackFrom:red :blue];
-            }
-        }
-    }
-    
-    // If any of the bases are at capacity, move the troops elsewhere to allow for more generation to happen
-    for (Base *red in redBases) {
-        if (red.count >= red.capacity) {
-            for (Base *otherRed in redBases) {
-                if (otherRed.count + red.count/2 < otherRed.capacity) {
-                    [self attackFrom:red :otherRed];
+    for (NSArray *bases in teamBases) {
+        // If any of the red bases have enough troops to capture a blue territory, do it.
+        for (Base *aiBase in otherBases) {
+            for (Base *base in otherBases) {
+                if ((base.count >= base.capacity) && ((int)aiBase.count/2 > (int)base.count)) {
+                    [self attackFrom:aiBase :base];
+                } else if (aiBase.count/2 > base.count + sqrtf(powf(base.position.x-aiBase.position.x, 2) + powf(base.position.y-aiBase.position.y, 2))/60.0) {
+                    [self attackFrom:aiBase :base];
                 }
             }
-       }
+        }
+        
+        // If any of the bases are at capacity, move the troops elsewhere to allow for more generation to happen
+        for (Base *aiBase in teamBases) {
+            if (aiBase.count >= aiBase.capacity) {
+                for (Base *allyBase in teamBases) {
+                    if (allyBase.count + aiBase.count/2 < allyBase.capacity) {
+                        [self attackFrom:aiBase :allyBase];
+                    }
+                }
+            }
+        }
+        
+        // If any of the bases are at capacity, move the troops to a gray base that can be overtaken
+        for (Base *aiBase in teamBases) {
+            if (aiBase.count >= aiBase.capacity) {
+                for (Base *neutral in neutralBases) {
+                    if (aiBase.count/2 >= neutral.count) {
+                        [self attackFrom:aiBase :neutral];
+                    }
+                }
+            }
+        }
     }
+
+}
+
+-(void)makeDecision:(ccTime)dt {
+    [self makeDecision:dt forTeam:redTeam];
+    [self makeDecision:dt forTeam:greenTeam];
+    [self makeDecision:dt forTeam:yellowTeam];
 }
 
 // on "dealloc" you need to release all your retained objects
@@ -222,20 +238,32 @@
 }
 
 -(BOOL)isGameOver {
-    BOOL red = NO;
-    BOOL blue = NO;
+    Team teamFound = neutralTeam;
     
-    for (Base *guy in self.bases) {
-        if (guy.team == redTeam) red = YES;
-        if (guy.team == blueTeam) blue = YES;
-        if (red && blue) break;
+    for (Base *base in self.bases) {
+        if ([self.teamsPlaying containsObject:[NSNumber numberWithInt:base.team]]) {
+            if (teamFound == neutralTeam) teamFound = base.team;
+            
+            if (teamFound != base.team) return NO;
+        }
     }
-    
-    if (red && blue) {
-        return NO;
-    } else {
-        return YES;
-    }
+
+//    BOOL red = NO;
+//    BOOL blue = NO;
+//
+//    
+//    for (Base *guy in self.bases) {
+//        if (guy.team == redTeam) red = YES;
+//        if (guy.team == blueTeam) blue = YES;
+//        if (red && blue) break;
+//    }
+//    
+//    if (red && blue) {
+//        return NO;
+//    } else {
+//        return YES;
+//    }
+    return YES;
 }
 
 -(void)transportFinished:(Transport *)sprite {
