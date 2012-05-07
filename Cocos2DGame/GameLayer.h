@@ -18,6 +18,8 @@
 @property (nonatomic, retain) NSMutableArray *transports;
 @property (nonatomic, retain) RectangleLayer *rectLayer;
 @property (nonatomic, retain) NSArray *teamsPlaying;
+@property (nonatomic, retain) CCProgressTimer *pt;
+@property (nonatomic, assign) float perc;
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
 -(id)initWithRectangleLayer:(RectangleLayer *)rectLayer;
