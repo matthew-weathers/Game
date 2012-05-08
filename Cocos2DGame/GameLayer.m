@@ -13,6 +13,7 @@
 #import "RectangleLayer.h"
 #import "PauseLayer.h"
 #import "NSMutableArray+Shuffling.h"
+#import "Level.h"
 
 // HelloWorldLayer implementation
 @implementation GameLayer
@@ -25,6 +26,7 @@
 @synthesize teamsPlaying = _teamsPlaying;
 @synthesize pt = _pt;
 @synthesize perc = _perc;
+@synthesize levelName = _levelName;
 
 +(CCScene *) scene
 {
@@ -42,45 +44,83 @@
 	return scene;
 }
 
--(id)initWithRectangleLayer:(RectangleLayer *)rectLayer {    
-	// always call "super" init
-	// Apple recommends to re-assign "self" with the "super" return value
-	if( (self=[super init])) {
++(id)nodeWithGameLevel:(Level *)level {
+    return  [[[self alloc] initWithGameLevel:level] autorelease];
+}
+-(id)initWithGameLevel:(Level *)level {
+	if((self=[super init])) {
         self.player = [Player new];
         self.player.team = blueTeam;
-        self.rectLayer = rectLayer;
-        self.rectLayer.delegate = self;
+       // self.rectLayer = rectLayer;
+       // self.rectLayer.delegate = self;
         
-        self.bases = [NSMutableArray array];
-        self.transports = [NSMutableArray array];
+        self.levelName = level.levelName;
+        self.teamsPlaying = level.teamsPlaying;
         
-        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Levels" ofType:@"plist"];
-        NSArray *levelsArray = [[NSDictionary dictionaryWithContentsOfFile:plistPath] objectForKey:@"levels"];
-        
-        NSDictionary *level = [levelsArray objectAtIndex:0];
-        
-        int tag = 0;
-        for (NSDictionary *baseDictionary in [level objectForKey:@"bases"]) {
+        NSMutableArray *tempBases = [NSMutableArray arrayWithCapacity:level.basesDictionaries.count];
+        for (NSDictionary *baseDictionary in level.basesDictionaries) {
             Base *base = [Base spriteWithFile:@"grayBase.png"];
             base.team = [[baseDictionary objectForKey:@"team"] intValue];
             base.capacity = [[baseDictionary objectForKey:@"capacity"] intValue];
-            base.tag = tag;
+            base.tag = [[baseDictionary objectForKey:@"tag"] intValue];
             base.regenSpeed = [[baseDictionary objectForKey:@"regenSpeed"] floatValue];
             base.position = ccp([[baseDictionary objectForKey:@"positionX"] intValue], [[baseDictionary objectForKey:@"positionY"] intValue]);
             base.delegate = self;
             
             [self addChild:base];
-            [self.bases addObject:base];
-            tag++;
-        }        
+            [tempBases addObject:base];
+        }
         
-        // Declare the teams that are playing
-        self.teamsPlaying = [level objectForKey:@"teamsPlaying"];
+        self.bases = tempBases;
+        self.transports = [NSMutableArray array];
         
         [self.bases makeObjectsPerformSelector:@selector(start)];
         
         [self schedule:@selector(nextFrame:)];
         [self schedule:@selector(makeDecision:) interval:5.0f];
+    }
+    return self;
+}
+
+-(id)initWithRectangleLayer:(RectangleLayer *)rectLayer {    
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
+	if( (self=[super init])) {
+//        self.player = [Player new];
+//        self.player.team = blueTeam;
+//        self.rectLayer = rectLayer;
+//        self.rectLayer.delegate = self;
+//        
+//        self.bases = [NSMutableArray array];
+//        self.transports = [NSMutableArray array];
+//        
+//        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Levels" ofType:@"plist"];
+//        NSArray *levelsArray = [[NSDictionary dictionaryWithContentsOfFile:plistPath] objectForKey:@"levels"];
+//        
+//        NSDictionary *level = [levelsArray objectAtIndex:0];
+//        
+//        int tag = 0;
+//        for (NSDictionary *baseDictionary in [level objectForKey:@"bases"]) {
+//            Base *base = [Base spriteWithFile:@"grayBase.png"];
+//            base.team = [[baseDictionary objectForKey:@"team"] intValue];
+//            base.capacity = [[baseDictionary objectForKey:@"capacity"] intValue];
+//            base.tag = tag;
+//            base.regenSpeed = [[baseDictionary objectForKey:@"regenSpeed"] floatValue];
+//            base.position = ccp([[baseDictionary objectForKey:@"positionX"] intValue], [[baseDictionary objectForKey:@"positionY"] intValue]);
+//            base.delegate = self;
+//            
+//            [self addChild:base];
+//            [self.bases addObject:base];
+//            tag++;
+//        }        
+//        
+//        // Declare the teams that are playing
+//        self.teamsPlaying = [level objectForKey:@"teamsPlaying"];
+//        
+//        [self.bases makeObjectsPerformSelector:@selector(start)];
+//        
+//        [self schedule:@selector(nextFrame:)];
+//        [self schedule:@selector(makeDecision:) interval:5.0f];
     }
     return self;
 }

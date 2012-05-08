@@ -5,6 +5,8 @@
 	<key>levels</key>
 	<array>
 		<dict>
+			<key>levelName</key>
+			<string>Derelict</string>
 			<key>teamsPlaying</key>
 			<array>
 				<integer>1</integer>
@@ -15,6 +17,8 @@
 			<key>bases</key>
 			<array>
 				<dict>
+					<key>tag</key>
+					<string>0</string>
 					<key>capacity</key>
 					<integer>5</integer>
 					<key>regenSpeed</key>
@@ -27,6 +31,8 @@
 					<integer>100</integer>
 				</dict>
 				<dict>
+					<key>tag</key>
+					<string>1</string>
 					<key>capacity</key>
 					<integer>5</integer>
 					<key>regenSpeed</key>
@@ -39,6 +45,8 @@
 					<integer>100</integer>
 				</dict>
 				<dict>
+					<key>tag</key>
+					<string>2</string>
 					<key>capacity</key>
 					<integer>10</integer>
 					<key>regenSpeed</key>
@@ -51,6 +59,8 @@
 					<integer>200</integer>
 				</dict>
 				<dict>
+					<key>tag</key>
+					<string>3</string>
 					<key>capacity</key>
 					<integer>5</integer>
 					<key>regenSpeed</key>
@@ -63,6 +73,8 @@
 					<integer>100</integer>
 				</dict>
 				<dict>
+					<key>tag</key>
+					<string>4</string>
 					<key>capacity</key>
 					<integer>30</integer>
 					<key>regenSpeed</key>

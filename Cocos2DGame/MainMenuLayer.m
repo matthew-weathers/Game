@@ -7,7 +7,7 @@
 //
 
 #import "MainMenuLayer.h"
-#import "GameLayer.h"
+#import "LevelMenuLayer.h"
 
 @implementation MainMenuLayer
 
@@ -31,8 +31,8 @@
 {
     
 	// Create some menu items
-    CCMenuItemLabel *menuItem1 = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Begin" fontName:@"Marker Felt" fontSize:44.0f] block:^(id sender) {
-        CCTransitionFade *fade = [CCTransitionFade transitionWithDuration:1.0 scene:[GameLayer scene] withColor:ccWHITE];
+    CCMenuItemLabel *menuItem1 = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Single Player" fontName:@"Marker Felt" fontSize:44.0f] block:^(id sender) {
+        CCTransitionFade *fade = [CCTransitionFade transitionWithDuration:1.0 scene:[LevelMenuLayer scene] withColor:ccWHITE];
         [[CCDirector sharedDirector] pushScene:fade];
     }];
     
