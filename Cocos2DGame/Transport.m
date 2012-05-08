@@ -46,7 +46,10 @@
 }
 
 -(void)moveToPosition:(CGPoint)point {
-    self.label = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.amount] fontName:@"Marker Felt" fontSize:12.0f];
+    CCLabelTTF *tempLabel = [[CCLabelTTF alloc] initWithString:[NSString stringWithFormat:@"%i", self.amount] fontName:@"Marker Felt" fontSize:12.0f];
+    self.label = tempLabel;
+    [tempLabel release];
+    
     self.label.position = self.position;
 
     [self.parent addChild:self.label];

@@ -127,11 +127,11 @@
 		C991BCC3154DF72D009A1DB6 /* PauseLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C991BCC2154DF72D009A1DB6 /* PauseLayer.m */; };
 		C9C4FB6B1558AB6600C764C5 /* LevelMenuLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C4FB6A1558AB6600C764C5 /* LevelMenuLayer.m */; };
 		C9C4FB6F1558ACB100C764C5 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C4FB6E1558ACB100C764C5 /* Level.m */; };
+		C9C4FB761558CBF500C764C5 /* NSArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C4FB751558CBF500C764C5 /* NSArray+Shuffling.m */; };
 		C9DEB0261555BD2600D9240C /* greenTransport.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB0251555BD2600D9240C /* greenTransport.png */; };
 		C9DEB02B1555BDFA00D9240C /* greenBase.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB0281555BDFA00D9240C /* greenBase.png */; };
 		C9DEB02C1555BDFA00D9240C /* yellowBase.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB0291555BDFA00D9240C /* yellowBase.png */; };
 		C9DEB02D1555BDFA00D9240C /* yellowTransport.png in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB02A1555BDFA00D9240C /* yellowTransport.png */; };
-		C9DEB0331555D19E00D9240C /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DEB0321555D19E00D9240C /* NSMutableArray+Shuffling.m */; };
 		C9DEB0351555E27000D9240C /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = C9DEB0341555E27000D9240C /* Levels.plist */; };
 		C9FE0D24154C77A900766883 /* RectangleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE0D23154C77A900766883 /* RectangleLayer.m */; };
 /* End PBXBuildFile section */
@@ -384,12 +384,12 @@
 		C9C4FB6A1558AB6600C764C5 /* LevelMenuLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelMenuLayer.m; sourceTree = "<group>"; };
 		C9C4FB6D1558ACB100C764C5 /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Level.h; sourceTree = "<group>"; };
 		C9C4FB6E1558ACB100C764C5 /* Level.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Level.m; sourceTree = "<group>"; };
+		C9C4FB741558CBF500C764C5 /* NSArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Shuffling.h"; sourceTree = "<group>"; };
+		C9C4FB751558CBF500C764C5 /* NSArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Shuffling.m"; sourceTree = "<group>"; };
 		C9DEB0251555BD2600D9240C /* greenTransport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenTransport.png; sourceTree = "<group>"; };
 		C9DEB0281555BDFA00D9240C /* greenBase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenBase.png; sourceTree = "<group>"; };
 		C9DEB0291555BDFA00D9240C /* yellowBase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowBase.png; sourceTree = "<group>"; };
 		C9DEB02A1555BDFA00D9240C /* yellowTransport.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowTransport.png; sourceTree = "<group>"; };
-		C9DEB0311555D19E00D9240C /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
-		C9DEB0321555D19E00D9240C /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 		C9DEB0341555E27000D9240C /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		C9FE0D22154C77A900766883 /* RectangleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectangleLayer.h; sourceTree = "<group>"; };
 		C9FE0D23154C77A900766883 /* RectangleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectangleLayer.m; sourceTree = "<group>"; };
@@ -449,6 +449,7 @@
 		7F4D59B215404F9A0017002C /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				C9C4FB701558CA1F00C764C5 /* Catagories */,
 				7F4D5B0415404F9C0017002C /* AppDelegate.h */,
 				7F4D5B0515404F9C0017002C /* AppDelegate.m */,
 				7F4D5B2915409FD70017002C /* Base.h */,
@@ -466,6 +467,8 @@
 				7F4D5B0715404F9C0017002C /* RootViewController.h */,
 				7F4D5B0815404F9C0017002C /* RootViewController.m */,
 				7F4D5B0D15404F9C0017002C /* GameConfig.h */,
+				C991BCC1154DF72D009A1DB6 /* PauseLayer.h */,
+				C991BCC2154DF72D009A1DB6 /* PauseLayer.m */,
 				7F4D5B1C154073620017002C /* Transport.h */,
 				7F4D5B1D154073620017002C /* Transport.m */,
 				7F4D5B3F1540AF7C0017002C /* Player.h */,
@@ -473,10 +476,6 @@
 				7F4D59B315404F9A0017002C /* Resources */,
 				7F4D59C715404F9A0017002C /* libs */,
 				7F4D5B0015404F9C0017002C /* Supporting Files */,
-				C991BCC1154DF72D009A1DB6 /* PauseLayer.h */,
-				C991BCC2154DF72D009A1DB6 /* PauseLayer.m */,
-				C9DEB0311555D19E00D9240C /* NSMutableArray+Shuffling.h */,
-				C9DEB0321555D19E00D9240C /* NSMutableArray+Shuffling.m */,
 			);
 			name = Game;
 			path = Cocos2DGame;
@@ -813,6 +812,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C9C4FB701558CA1F00C764C5 /* Catagories */ = {
+			isa = PBXGroup;
+			children = (
+				C9C4FB741558CBF500C764C5 /* NSArray+Shuffling.h */,
+				C9C4FB751558CBF500C764C5 /* NSArray+Shuffling.m */,
+			);
+			name = Catagories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -989,9 +997,9 @@
 				C9FE0D24154C77A900766883 /* RectangleLayer.m in Sources */,
 				C991BCBC154DE007009A1DB6 /* MainMenuLayer.m in Sources */,
 				C991BCC3154DF72D009A1DB6 /* PauseLayer.m in Sources */,
-				C9DEB0331555D19E00D9240C /* NSMutableArray+Shuffling.m in Sources */,
 				C9C4FB6B1558AB6600C764C5 /* LevelMenuLayer.m in Sources */,
 				C9C4FB6F1558ACB100C764C5 /* Level.m in Sources */,
+				C9C4FB761558CBF500C764C5 /* NSArray+Shuffling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,9 @@
 
 @interface Base : CCSprite <CCTargetedTouchDelegate>
 
+
+
+
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) ccColor3B defaultColor;
 @property (nonatomic, assign) id<BaseDelegate> delegate;

@@ -6,18 +6,14 @@
 //  Copyright __MyCompanyName__ 2012. All rights reserved.
 //
 
-
-// Import the interfaces
 #import "GameLayer.h"
 #import "Player.h"
 #import "RectangleLayer.h"
 #import "PauseLayer.h"
-#import "NSMutableArray+Shuffling.h"
+#import "NSArray+Shuffling.h"
 #import "Level.h"
 
-// HelloWorldLayer implementation
 @implementation GameLayer
-
 
 @synthesize bases = _bases;
 @synthesize transports = _transports;
@@ -28,31 +24,22 @@
 @synthesize perc = _perc;
 @synthesize levelName = _levelName;
 
-+(CCScene *) scene
-{
-	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
-	
-    RectangleLayer *rectLayer = [RectangleLayer node];
-    [scene addChild:rectLayer z:1];
-    
-    // 'layer' is an autorelease object.
-    GameLayer *layer = [[[GameLayer alloc] initWithRectangleLayer:rectLayer] autorelease];
-    [scene addChild:layer];
-    
-	// return the scene
-	return scene;
-}
-
 +(id)nodeWithGameLevel:(Level *)level {
     return  [[[self alloc] initWithGameLevel:level] autorelease];
 }
+
 -(id)initWithGameLevel:(Level *)level {
 	if((self=[super init])) {
-        self.player = [Player new];
+        Player *tempPlayer = [[Player alloc] init];
+        self.player = tempPlayer;
+        [tempPlayer release];
+        
         self.player.team = blueTeam;
-       // self.rectLayer = rectLayer;
-       // self.rectLayer.delegate = self;
+        
+        RectangleLayer *rectLayer = [RectangleLayer node];
+        [self addChild:rectLayer z:1];
+        self.rectLayer = rectLayer;
+        self.rectLayer.delegate = self;
         
         self.levelName = level.levelName;
         self.teamsPlaying = level.teamsPlaying;
@@ -169,7 +156,7 @@
 }
 
 -(void)makeDecision:(ccTime)dt forTeam:(Team)team {
-    [self.bases shuffle];
+    [self.bases shuffled];
     NSMutableArray *teamBases = [NSMutableArray array];
     NSMutableArray *otherBases = [NSMutableArray array];
     NSMutableArray *neutralBases = [NSMutableArray array];
@@ -259,53 +246,55 @@
     }
 }
 
--(BOOL)isGameOver {
-    Team teamFound = neutralTeam;
-    
+-(BOOL)isGameOver {    
     BOOL playerDead = YES;    
 
     for (Base *base in self.bases) {
-        if (base.team == self.player.team) playerDead = NO;
-    }
-    if (playerDead) return playerDead;
-    
-    for (Base *base in self.bases) {
-            if (teamFound == neutralTeam) teamFound = base.team;
-            
-            if (teamFound != base.team || teamFound != neutralTeam) return NO;
-    }
-    
-    return YES;
-}
-
--(void)transportFinished:(Transport *)sprite {
-    Base *to;
-    for (Base *b in self.bases) {
-        if (b.tag == sprite.toTag) {
-            to = b;
+        if (base.team == self.player.team) {
+            playerDead = NO;
             break;
         }
     }
     
-    float toCount = floorf(to.count);
+    if (playerDead) return YES;
     
-    if (to.team == sprite.team) {
-        to.count += sprite.amount;                
-        [to updateLabel:0];        
-    } else {
-        if (toCount == sprite.amount) {
-            to.count = 0;
-            [to updateLabel:0];
-            to.team = neutralTeam;
-        } else if (toCount < sprite.amount) {
-            to.count = sprite.amount - to.count;
-            to.team = sprite.team;
-            [to updateLabel:0];
-        } else {
-            to.count -= sprite.amount;
-            [to updateLabel:0];
+    BOOL opponentsDead = YES;
+    for (Base *base in self.bases) {
+        if (base.team != neutralTeam && base.team != self.player.team) {
+            opponentsDead = NO;
+            break;
         }
     }
+    
+    return opponentsDead;
+}
+
+-(void)transportFinished:(Transport *)sprite {
+    for (Base *b in self.bases) {
+        if (b.tag == sprite.toTag) {            
+            float toCount = floorf(b.count);
+            
+            if (b.team == sprite.team) {
+                b.count += sprite.amount;                
+                [b updateLabel:0];        
+            } else {
+                if (toCount == sprite.amount) {
+                    b.count = 0;
+                    [b updateLabel:0];
+                    b.team = neutralTeam;
+                } else if (toCount < sprite.amount) {
+                    b.count = sprite.amount - b.count;
+                    b.team = sprite.team;
+                    [b updateLabel:0];
+                } else {
+                    b.count -= sprite.amount;
+                    [b updateLabel:0];
+                }
+            }
+            break;
+        }
+    }
+
     
     if ([self isGameOver]) {
         PauseLayer *pl = [PauseLayer node];
