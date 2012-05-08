@@ -60,12 +60,15 @@
         NSMutableArray *tempBases = [NSMutableArray arrayWithCapacity:level.basesDictionaries.count];
         for (NSDictionary *baseDictionary in level.basesDictionaries) {
             Base *base = [Base spriteWithFile:@"grayBase.png"];
-            base.team = [[baseDictionary objectForKey:@"team"] intValue];
             base.capacity = [[baseDictionary objectForKey:@"capacity"] intValue];
             base.tag = [[baseDictionary objectForKey:@"tag"] intValue];
             base.regenSpeed = [[baseDictionary objectForKey:@"regenSpeed"] floatValue];
             base.position = ccp([[baseDictionary objectForKey:@"positionX"] intValue], [[baseDictionary objectForKey:@"positionY"] intValue]);
+            base.count = [[baseDictionary objectForKey:@"count"] intValue];
+            base.team = [[baseDictionary objectForKey:@"team"] intValue];
             base.delegate = self;
+            
+            base.scale = (float)base.capacity/50.0f;
             
             [self addChild:base];
             [tempBases addObject:base];
@@ -267,11 +270,9 @@
     if (playerDead) return playerDead;
     
     for (Base *base in self.bases) {
-        if ([self.teamsPlaying containsObject:[NSNumber numberWithInt:base.team]]) {
             if (teamFound == neutralTeam) teamFound = base.team;
             
-            if (teamFound != base.team) return NO;
-        }
+            if (teamFound != base.team || teamFound != neutralTeam) return NO;
     }
     
     return YES;
