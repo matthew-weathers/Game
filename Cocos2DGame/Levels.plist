@@ -18,7 +18,7 @@
 					<key>count</key>
 					<integer>20</integer>
 					<key>tag</key>
-					<integer>0</integer>
+					<integer>101</integer>
 					<key>capacity</key>
 					<integer>50</integer>
 					<key>regenSpeed</key>
@@ -34,7 +34,7 @@
 					<key>count</key>
 					<integer>13</integer>
 					<key>tag</key>
-					<integer>1</integer>
+					<integer>102</integer>
 					<key>capacity</key>
 					<integer>35</integer>
 					<key>regenSpeed</key>
@@ -50,7 +50,7 @@
                     <key>count</key>
 					<integer>50</integer>
 					<key>tag</key>
-					<integer>2</integer>
+					<integer>103</integer>
 					<key>capacity</key>
 					<integer>70</integer>
 					<key>regenSpeed</key>
@@ -66,7 +66,7 @@
                     <key>count</key>
 					<integer>18</integer>
 					<key>tag</key>
-					<integer>3</integer>
+					<integer>104</integer>
 					<key>capacity</key>
 					<integer>40</integer>
 					<key>regenSpeed</key>
@@ -82,7 +82,7 @@
                     <key>count</key>
 					<integer>9</integer>
 					<key>tag</key>
-					<integer>4</integer>
+					<integer>105</integer>
 					<key>capacity</key>
 					<integer>25</integer>
 					<key>regenSpeed</key>
@@ -98,7 +98,7 @@
                     <key>count</key>
 					<integer>19</integer>
 					<key>tag</key>
-					<integer>5</integer>
+					<integer>106</integer>
 					<key>capacity</key>
 					<integer>36</integer>
 					<key>regenSpeed</key>
@@ -114,7 +114,7 @@
                     <key>count</key>
 					<integer>59</integer>
 					<key>tag</key>
-					<integer>6</integer>
+					<integer>107</integer>
 					<key>capacity</key>
 					<integer>70</integer>
 					<key>regenSpeed</key>
@@ -130,7 +130,7 @@
                     <key>count</key>
 					<integer>23</integer>
 					<key>tag</key>
-					<integer>7</integer>
+					<integer>108</integer>
 					<key>capacity</key>
 					<integer>45</integer>
 					<key>regenSpeed</key>

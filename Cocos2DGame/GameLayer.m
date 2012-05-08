@@ -56,7 +56,6 @@
             base.delegate = self;
             
             base.scale = (float)base.capacity/50.0f;
-            
             [self addChild:base];
             [tempBases addObject:base];
         }
@@ -72,48 +71,7 @@
     return self;
 }
 
--(id)initWithRectangleLayer:(RectangleLayer *)rectLayer {    
-	// always call "super" init
-	// Apple recommends to re-assign "self" with the "super" return value
-	if( (self=[super init])) {
-//        self.player = [Player new];
-//        self.player.team = blueTeam;
-//        self.rectLayer = rectLayer;
-//        self.rectLayer.delegate = self;
-//        
-//        self.bases = [NSMutableArray array];
-//        self.transports = [NSMutableArray array];
-//        
-//        NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Levels" ofType:@"plist"];
-//        NSArray *levelsArray = [[NSDictionary dictionaryWithContentsOfFile:plistPath] objectForKey:@"levels"];
-//        
-//        NSDictionary *level = [levelsArray objectAtIndex:0];
-//        
-//        int tag = 0;
-//        for (NSDictionary *baseDictionary in [level objectForKey:@"bases"]) {
-//            Base *base = [Base spriteWithFile:@"grayBase.png"];
-//            base.team = [[baseDictionary objectForKey:@"team"] intValue];
-//            base.capacity = [[baseDictionary objectForKey:@"capacity"] intValue];
-//            base.tag = tag;
-//            base.regenSpeed = [[baseDictionary objectForKey:@"regenSpeed"] floatValue];
-//            base.position = ccp([[baseDictionary objectForKey:@"positionX"] intValue], [[baseDictionary objectForKey:@"positionY"] intValue]);
-//            base.delegate = self;
-//            
-//            [self addChild:base];
-//            [self.bases addObject:base];
-//            tag++;
-//        }        
-//        
-//        // Declare the teams that are playing
-//        self.teamsPlaying = [level objectForKey:@"teamsPlaying"];
-//        
-//        [self.bases makeObjectsPerformSelector:@selector(start)];
-//        
-//        [self schedule:@selector(nextFrame:)];
-//        [self schedule:@selector(makeDecision:) interval:5.0f];
-    }
-    return self;
-}
+
 
 -(void)attackFrom:(Base *)attacker :(Base *)victim {
     int amount = attacker.count/2;
@@ -270,31 +228,24 @@
 }
 
 -(void)transportFinished:(Transport *)sprite {
-    for (Base *b in self.bases) {
-        if (b.tag == sprite.toTag) {            
-            float toCount = floorf(b.count);
+    Base *b = (Base *)[self getChildByTag:sprite.toTag];
+             
+    float toCount = floorf(b.count);
             
-            if (b.team == sprite.team) {
-                b.count += sprite.amount;                
-                [b updateLabel:0];        
-            } else {
-                if (toCount == sprite.amount) {
-                    b.count = 0;
-                    [b updateLabel:0];
-                    b.team = neutralTeam;
-                } else if (toCount < sprite.amount) {
-                    b.count = sprite.amount - b.count;
-                    b.team = sprite.team;
-                    [b updateLabel:0];
-                } else {
-                    b.count -= sprite.amount;
-                    [b updateLabel:0];
-                }
-            }
-            break;
+    if (b.team == sprite.team) {
+        b.count += sprite.amount;        
+    } else {
+        if (toCount == sprite.amount) {
+            b.count = 0;
+            b.team = neutralTeam;
+        } else if (toCount < sprite.amount) {
+            b.count = sprite.amount - b.count;
+            b.team = sprite.team;
+        } else {
+            b.count -= sprite.amount;
         }
     }
-
+    [b updateLabel:0];
     
     if ([self isGameOver]) {
         PauseLayer *pl = [PauseLayer node];

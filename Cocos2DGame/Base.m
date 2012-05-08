@@ -99,16 +99,17 @@
 }
 
 - (void)updateLabel:(ccTime)dt {
-    if (self.team == neutralTeam) return;
+    if (self.team != neutralTeam) {
     
-    if (self.count < self.capacity) {
-        self.count += self.regenSpeed*dt;
-        [self.label setColor:ccWHITE];
-    } else if (self.count == self.capacity - 1) {
-        self.count += dt;
-        [self.label setColor:ccGRAY];
-    } else {
-        [self.label setColor:ccGRAY];
+        if (self.count < self.capacity) {
+            self.count += self.regenSpeed*dt;
+            [self.label setColor:ccWHITE];
+        } else if (self.count == self.capacity - 1) {
+            self.count += dt;
+            [self.label setColor:ccGRAY];
+        } else {
+            [self.label setColor:ccGRAY];
+        }
     }
     [self.label setString:[NSString stringWithFormat:@"%1.0f", self.count]];
 }

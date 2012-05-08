@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Cocos2DGame/GameLayer.m"
-         timestampString = "358142184.54797"
+         timestampString = "358143761.983532"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "96"
-         endingLineNumber = "96"
+         startingLineNumber = "74"
+         endingLineNumber = "74"
          landmarkName = "-initWithRectangleLayer:"
          landmarkType = "5">
       </FileBreakpoint>
