@@ -7,26 +7,26 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Cocos2DGame/GameLayer.m"
-         timestampString = "358143761.983532"
+         filePath = "Cocos2DGame/AppDelegate.m"
+         timestampString = "358309405.555595"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "74"
-         endingLineNumber = "74"
-         landmarkName = "-initWithRectangleLayer:"
+         startingLineNumber = "156"
+         endingLineNumber = "156"
+         landmarkName = "-application:handleOpenURL:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Cocos2DGame/Base.m"
-         timestampString = "358142184.54797"
+         filePath = "Cocos2DGame/AppDelegate.m"
+         timestampString = "358309406.487912"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "39"
-         endingLineNumber = "39"
-         landmarkName = "-start"
+         startingLineNumber = "161"
+         endingLineNumber = "161"
+         landmarkName = "-application:openURL:sourceApplication:annotation:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -42,11 +42,15 @@
         level.basesDictionaries = [levelDictionary objectForKey:@"bases"];
         level.teamsPlaying = [levelDictionary objectForKey:@"teamsPlaying"];
         
-        [menu addChild:[CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:level.levelName fontName:@"Marker Felt" fontSize:20.0f] block:^(id sender) {
+        [menu addChild:[CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:level.levelName fontName:@"Helvetica Neue" fontSize:20.0f] block:^(id sender) {
             CCTransitionFade *fade = [CCTransitionFade transitionWithDuration:1.0 scene:[GameLayer nodeWithGameLevel:level] withColor:ccWHITE];
             [[CCDirector sharedDirector] pushScene:fade];
         }]];
     }
+    
+    [menu addChild:[CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Back" fontName:@"Helvetica Neue" fontSize:20.0f] block:^(id sender) {
+        [[CCDirector sharedDirector] popScene];
+    }]];
     
 	// Arrange the menu items vertically
 	[menu alignItemsVertically];

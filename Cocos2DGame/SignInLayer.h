@@ -1,8 +1,8 @@
 //
-//  MainMenuLayer.h
+//  SignInLayer.h
 //  Game
 //
-//  Created by Matthew Weathers on 4/29/12.
+//  Created by Matthew Weathers on 5/9/12.
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import "cocos2d.h"
 #import "AccountManager.h"
 
-@interface MainMenuLayer : CCLayer <AccountManagerDelegate>
+@interface SignInLayer : CCLayer <AccountManagerDelegate>
 
 +(CCScene *) scene;
 

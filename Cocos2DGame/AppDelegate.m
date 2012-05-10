@@ -27,6 +27,7 @@
 #if GAME_AUTOROTATION == kGameAutorotationUIViewController
 
 	CC_ENABLE_DEFAULT_GL_STATES();
+
 	CCDirector *director = [CCDirector sharedDirector];
 	CGSize size = [director winSize];
 	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
@@ -109,8 +110,8 @@
 	// Removes the startup flicker
 	[self removeStartupFlicker];
 	
-	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [MainMenuLayer scene]];
+	// Run the intro Scene    
+    [[CCDirector sharedDirector] runWithScene: [MainMenuLayer scene]];
 }
 
 
@@ -148,6 +149,17 @@
 
 - (void)applicationSignificantTimeChange:(UIApplication *)application {
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+}
+
+// Pre iOS 4.2 support
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [[AccountManager sharedAccountManager] handleOpenURL:url]; 
+}
+
+// For iOS 4.2+ support
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [[AccountManager sharedAccountManager] handleOpenURL:url]; 
 }
 
 - (void)dealloc {
